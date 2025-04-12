@@ -1,0 +1,15 @@
+name: 'Assign Reviewer and Notify on Slack'
+description: 'Assign a random reviewer to a PR and send a Slack notification'
+inputs:
+  github_token:
+    description: 'GitHub token'
+    required: true
+  slack_webhook_url:
+    description: 'Slack Webhook URL'
+    required: true
+  reviewers:
+    description: 'List of reviewers'
+    required: true
+runs:
+  using: 'node20'
+  main: 'assignReviewer.mjs'
