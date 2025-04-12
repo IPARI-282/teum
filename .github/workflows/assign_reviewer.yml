@@ -1,0 +1,21 @@
+name: Assign Reviewer and Notify on Slack
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  assign-reviewer:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Assign reviewer and notify on Slack
+        uses: ./.github/actions/assignReviewer
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          reviewers: >
+            ${{ vars.REVIEWERS }}
