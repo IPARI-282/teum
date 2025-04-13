@@ -1,8 +1,12 @@
-name: Assign Reviewer and Notify on Slack
+name: Assign Reviewer
 
 on:
   pull_request:
-    types: [opened, ready_for_review]
+    types: [opened, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
 
 jobs:
   assign-reviewer:
@@ -12,10 +16,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./.github/actions/assignReviewer
+
       - name: Assign reviewer and notify on Slack
         uses: ./.github/actions/assignReviewer
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          reviewers: >
-            ${{ vars.REVIEWERS }}
+          reviewers: ${{ vars.REVIEWERS }}

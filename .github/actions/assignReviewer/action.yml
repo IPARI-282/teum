@@ -8,7 +8,7 @@ inputs:
     description: 'Slack Webhook URL'
     required: true
   reviewers:
-    description: 'List of reviewers'
+    description: 'List of reviewers (JSON string)'
     required: true
 runs:
   using: 'node20'
