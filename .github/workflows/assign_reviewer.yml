@@ -4,6 +4,10 @@ on:
   pull_request:
     types: [opened, reopened, ready_for_review]
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   assign-reviewer:
     if: github.event.pull_request.draft == false
