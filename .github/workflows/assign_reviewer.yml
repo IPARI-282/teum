@@ -1,3 +1,9 @@
+name: Assign Reviewer
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+
 jobs:
   assign-reviewer:
     if: github.event.pull_request.draft == false
@@ -9,9 +15,9 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.15.0'
+          node-version: "20"
 
-      - name: Install dependencies for custom action
+      - name: Install dependencies
         run: npm install
         working-directory: ./.github/actions/assignReviewer
 
@@ -20,5 +26,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          reviewers: >
-            ${{ vars.REVIEWERS }}
+          reviewers: ${{ vars.REVIEWERS }}
