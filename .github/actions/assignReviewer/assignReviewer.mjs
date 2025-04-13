@@ -17,6 +17,10 @@ import fetch from "node-fetch";
     const pr = github.context.payload.pull_request;
     const prAuthor = pr.user.login;
 
+    const actionType = github.context.payload.action;
+    const updateNote =
+      actionType === "synchronize" ? "🔄 커밋이 추가되었습니다.\n" : "";
+
     let reviewer;
     if (pr.requested_reviewers.length > 0) {
       reviewer = REVIEWERS.find(
@@ -59,7 +63,7 @@ import fetch from "node-fetch";
     }
 
     const message = {
-      text: `<@${reviewer.slackUserId}>님! PR 리뷰 부탁드립니다.\n👉 <${pr.html_url}|${pr.title}>`,
+      text: `${updateNote}<@${reviewer.slackUserId}>님! PR 리뷰 부탁드립니다.\n👉 <${pr.html_url}|${pr.title}>`,
     };
 
     const res = await fetch(slackWebhookUrl, {
