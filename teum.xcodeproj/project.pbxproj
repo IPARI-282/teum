@@ -15,6 +15,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BFB8F2B62DB36B7500C5A7CB /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		BFB8F2B72DB36CAA00C5A7CB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C4182E9C2DA26B97006EF403 /* teum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4182EA12DA26B97006EF403 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C4182EA62DA26B9A006EF403 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -54,6 +56,8 @@
 			children = (
 				C4182E9E2DA26B97006EF403 /* teum */,
 				C4182E9D2DA26B97006EF403 /* Products */,
+				BFB8F2B62DB36B7500C5A7CB /* .gitignore */,
+				BFB8F2B72DB36CAA00C5A7CB /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
