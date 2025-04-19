@@ -97,4 +97,4 @@ node_modules/
 
 # 기타
 .DS_Store
-*.logteum/GoogleService-Info.plist
+**/GoogleService-Info.plist
