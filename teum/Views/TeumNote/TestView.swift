@@ -12,6 +12,7 @@ import FirebaseFirestore
  teum구글 계정으로 로그인후 해당 링크 연결시 FireStore 데이터베이스 확인 가능
  https://console.firebase.google.com/project/teum-1d047/firestore/databases/-default-/data/~2FUsers~2Ftest-user?hl=ko&fb_gclid=CjwKCAjwk43ABhBIEiwAvvMEB_j08nLbdH75G5DBExUK3gjMApYDal1KAA9ql8CpLg8sgJf1UTKObhoC8_kQAvD_BwE
  */
+
 struct FireStoreTestView: View {
     @State private var title: String = ""
     @State private var content: String = ""

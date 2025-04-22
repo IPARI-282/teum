@@ -88,7 +88,7 @@ final class FireStoreManager {
             try $0.data(as: Note.self)
         }
     }
-
+    
     // MARK: - 커뮤니티 노트 조회 (isPublic = true)
     func fetchPublicNotes() async throws -> [Note] {
         let snapshot = try await db.collection("Notes")

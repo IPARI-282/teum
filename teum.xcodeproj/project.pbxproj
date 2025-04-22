@@ -58,8 +58,8 @@
 			children = (
 				C4182E9E2DA26B97006EF403 /* teum */,
 				C4182E9D2DA26B97006EF403 /* Products */,
-				BFB8F2B62DB36B7500C5A7CB /* .gitignore */,
 				BFB8F2B72DB36CAA00C5A7CB /* README.md */,
+				BFB8F2B62DB36B7500C5A7CB /* .gitignore */,
 			);
 			sourceTree = "<group>";
 		};
