@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C4182EA22DA26B97006EF403 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4182EA12DA26B97006EF403 /* ContentView.swift */; };
 		C4182EA72DA26B9A006EF403 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4182EA62DA26B9A006EF403 /* Preview Assets.xcassets */; };
+		F118BB292DB3887A00724DCB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F118BB282DB3887A00724DCB /* GoogleService-Info.plist */; };
 		F138A1622DAF5FA2000A6DE9 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F138A1612DAF5FA2000A6DE9 /* FirebaseAuth */; };
 		F138A1642DAF5FA2000A6DE9 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = F138A1632DAF5FA2000A6DE9 /* FirebaseCrashlytics */; };
 		F138A1662DAF5FA2000A6DE9 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F138A1652DAF5FA2000A6DE9 /* FirebaseFirestore */; };
@@ -20,6 +21,7 @@
 		C4182E9C2DA26B97006EF403 /* teum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4182EA12DA26B97006EF403 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C4182EA62DA26B9A006EF403 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F118BB282DB3887A00724DCB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -83,6 +85,7 @@
 				F138A0BD2DAE0EAC000A6DE9 /* Resource */,
 				F138A0B52DAE0E73000A6DE9 /* Application */,
 				C4182EA12DA26B97006EF403 /* ContentView.swift */,
+				F118BB282DB3887A00724DCB /* GoogleService-Info.plist */,
 				C4182EA52DA26B9A006EF403 /* Preview Content */,
 			);
 			path = teum;
@@ -182,6 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4182EA72DA26B9A006EF403 /* Preview Assets.xcassets in Resources */,
+				F118BB292DB3887A00724DCB /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,7 +330,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"teum/Preview Content\"";
-				DEVELOPMENT_TEAM = 95Z2W8U6PK;
+				DEVELOPMENT_TEAM = Y2VDXSZQ3M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "틈";
@@ -361,7 +365,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"teum/Preview Content\"";
-				DEVELOPMENT_TEAM = 95Z2W8U6PK;
+				DEVELOPMENT_TEAM = Y2VDXSZQ3M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "틈";
