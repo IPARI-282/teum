@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PhotosUI
+import FirebaseFirestore
 
 struct TeumNoteWriteView: View {
     
@@ -15,6 +16,9 @@ struct TeumNoteWriteView: View {
     @State private var contentText = ""
     @State private var selectedPhotos: [PhotosPickerItem] = []
     @State private var selectedUIImages: [UIImage] = []
+    
+    @State private var showAlert = false
+    @State private var alertMessage = ""
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -27,6 +31,11 @@ struct TeumNoteWriteView: View {
         }
         .padding(.top, 30)
         .padding(.horizontal, 20)
+        .alert("알림", isPresented: $showAlert) {
+            Button("확인", role: .cancel) { }
+        } message: {
+            Text(alertMessage)
+        }
     }
     
     private func titleFieldView() -> some View {
@@ -124,7 +133,9 @@ struct TeumNoteWriteView: View {
     
     private func saveButton() -> some View {
         Button {
-            print("저장 버튼 클릭")
+            Task {
+                await saveNoteToFirestore()
+            }
         } label: {
             Text("SAVE")
                 .font(.headline)
@@ -135,6 +146,43 @@ struct TeumNoteWriteView: View {
                 .cornerRadius(10)
         }
         
+    }
+    
+    private func saveNoteToFirestore() async {
+        let uid = "test-user"
+
+        do {
+            try await FireStoreManager.shared.saveTestUser()
+        } catch {
+            alertMessage = "유저 저장 실패: \(error.localizedDescription)"
+            showAlert = true
+            return
+        }
+
+        let note = Note(
+            id: nil,
+            userId: uid,
+            title: titleText,
+            date: selectedDate,
+            socialBattery: 50,
+            placeName: "",
+            latitude: 0,
+            longitude: 0,
+            content: contentText,
+            imagePaths: [],
+            isPublic: true,
+            createdAt: Date(),
+            updatedAt: nil
+        )
+
+        do {
+            try await FireStoreManager.shared.addNote(note)
+            alertMessage = "노트 저장 성공! (userId: \(uid))"
+        } catch {
+            alertMessage = "노트 저장 실패: \(error.localizedDescription)"
+        }
+
+        showAlert = true
     }
 
 }
