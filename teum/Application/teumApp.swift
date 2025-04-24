@@ -6,17 +6,16 @@
 //
 
 import SwiftUI
+
 import FirebaseCore
 import FirebaseFirestore
 
 @main
 struct teumApp: App {
-    init() {
-        FirebaseApp.configure()
-    }
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     var body: some Scene {
         WindowGroup {
-            FireStoreTestView()
+            ContentView()
         }
     }
 }
