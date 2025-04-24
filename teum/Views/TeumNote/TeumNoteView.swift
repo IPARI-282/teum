@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TeumNoteView: View {
     var body: some View {
-        
+        Text("TeumNoteView")
     }
 }
 

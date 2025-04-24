@@ -10,7 +10,8 @@ import FirebaseAuth
 
 final class LoginViewModel: ViewModelType {
     static let shared = LoginViewModel()
-    @Published var isAuthenticated: Bool = false
+    @Published var isAuthenticated = false
+    @Published var isLoading = true
     @Published var user: FirebaseAuth.User?
     private var appleSignInManager: AppleLoginManager
     private var authStateDidChangeListenerHandle: AuthStateDidChangeListenerHandle?
@@ -41,6 +42,12 @@ final class LoginViewModel: ViewModelType {
         self.authStateDidChangeListenerHandle = Auth.auth().addStateDidChangeListener { [weak self] _, user in
             self?.user = user
             self?.isAuthenticated = user != nil
+        }
+        
+        // Firebase 인증 상태 리스너 설정
+        Auth.auth().addStateDidChangeListener { [weak self] _, user in
+            self?.isAuthenticated = user != nil
+            self?.isLoading = false
         }
     }
     //리소스 정리
@@ -111,6 +118,7 @@ final class LoginViewModel: ViewModelType {
                         let displayName = "\(givenName) \(familyName)"
                         
                         UserDefaults.standard.set(displayName, forKey: "userName")
+                        //UserDefaultsManager.shared.updateUser(self?.user)
                         print(displayName)
                         print(UserDefaults.standard.string(forKey: "userName"))
                         // 사용자 프로필 업데이트

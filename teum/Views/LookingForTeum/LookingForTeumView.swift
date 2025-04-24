@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LookingForTeumView: View {
     var body: some View {
-        
+        Text("LookingForTeumView")
     }
 }
 

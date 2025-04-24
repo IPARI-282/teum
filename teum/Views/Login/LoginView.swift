@@ -28,11 +28,11 @@ struct LoginView: View {
                     .padding(.bottom, 40)
                 
                 //애플 로그인 버튼
-                SignInWithAppleButton { request in
+                SignInWithAppleButton(.continue, onRequest: { request in
                     viewModel.send(action: .appleLogin(request))
-                } onCompletion: { result in
+                }, onCompletion: { result in
                     viewModel.send(action: .appleLoginHandler(result))
-                }
+                })
                 .frame(maxWidth: .infinity)
                 .frame(height: 50)
                 
@@ -41,9 +41,11 @@ struct LoginView: View {
                 } label: {
                     HStack {
                         Image(systemName: "g.circle.fill")
-                            .foregroundStyle(Color.midnightBlue)
-                        Text("Sign in with Google")
-                            .foregroundStyle(Color.midnightBlue)
+                            .foregroundStyle(Color.gray)
+                            .font(.title2 )
+                        Text("Continue with Google")
+                            .foregroundStyle(Color.gray)
+                            .font(.title2 )
                     }
                     .frame(maxWidth: .infinity)
                     .frame(height: 50)
