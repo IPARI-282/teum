@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var loginViewModel = LoginViewModel()
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        if loginViewModel.isAuthenticated {
+            LookingForTeumView()
+        } else {
+            LoginView(viewModel: loginViewModel)
         }
-        .padding()
+        
     }
 }
 
