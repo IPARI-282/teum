@@ -238,12 +238,10 @@ struct TeumNoteWriteView: View {
             title: titleText,
             date: selectedDate,
             socialBattery: 50,
-            placeName: "",
-            latitude: 0,
-            longitude: 0,
+            district: selectedDistrict.rawValue,
             content: contentText,
-            imagePaths: [],
-            isPublic: true,
+            imagePaths: [],  // TODO: 이미지 어떻게 저장할건지 논의 필요
+            isPublic: UserDefaultsManager.shared.isTeumNotePublic,
             createdAt: Date(),
             updatedAt: nil
         )
@@ -251,6 +249,7 @@ struct TeumNoteWriteView: View {
         do {
             try await FireStoreManager.shared.addNote(note)
             alertMessage = "노트 저장 성공! (userId: \(uid))"
+            UserDefaultsManager.shared.isTeumNotePublic = true  // 기본값으로 다시 설정
         } catch {
             alertMessage = "노트 저장 실패: \(error.localizedDescription)"
         }
