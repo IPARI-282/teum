@@ -13,6 +13,7 @@ struct TeumNoteWriteView: View {
     
     @State private var titleText = ""
     @State private var selectedDate = Date()
+    @State private var selectedDistrict: SeoulDistrict = .gangnam
     @State private var contentText = ""
     @State private var selectedPhotos: [PhotosPickerItem] = []
     @State private var selectedUIImages: [UIImage] = []
@@ -20,10 +21,71 @@ struct TeumNoteWriteView: View {
     @State private var showAlert = false
     @State private var alertMessage = ""
     
+    enum SeoulDistrict: String, CaseIterable {
+        case gangnam
+        case gangdong
+        case gangbuk
+        case gangseo
+        case gwanak
+        case gwangjin
+        case guro
+        case geumcheon
+        case nowon
+        case dobong
+        case dongdaemun
+        case dongjak
+        case mapo
+        case seodaemun
+        case seocho
+        case seongdong
+        case seongbuk
+        case songpa
+        case yangcheon
+        case yeongdeungpo
+        case yongsan
+        case eunpyeong
+        case jongno
+        case jung
+        case jungnang
+
+        var koreanName: String {
+            switch self {
+            case .gangnam: return "강남구"
+            case .gangdong: return "강동구"
+            case .gangbuk: return "강북구"
+            case .gangseo: return "강서구"
+            case .gwanak: return "관악구"
+            case .gwangjin: return "광진구"
+            case .guro: return "구로구"
+            case .geumcheon: return "금천구"
+            case .nowon: return "노원구"
+            case .dobong: return "도봉구"
+            case .dongdaemun: return "동대문구"
+            case .dongjak: return "동작구"
+            case .mapo: return "마포구"
+            case .seodaemun: return "서대문구"
+            case .seocho: return "서초구"
+            case .seongdong: return "성동구"
+            case .seongbuk: return "성북구"
+            case .songpa: return "송파구"
+            case .yangcheon: return "양천구"
+            case .yeongdeungpo: return "영등포구"
+            case .yongsan: return "용산구"
+            case .eunpyeong: return "은평구"
+            case .jongno: return "종로구"
+            case .jung: return "중구"
+            case .jungnang: return "중랑구"
+            }
+        }
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             titleFieldView()
-            datePickerView()
+            HStack {
+                datePickerView()
+                districtPickerView()
+            }
             contentFieldView()
             photoPickerView()
             selectedPhotoPreviewView()
@@ -31,6 +93,7 @@ struct TeumNoteWriteView: View {
         }
         .padding(.top, 30)
         .padding(.horizontal, 20)
+        .background(Color.softLavender.opacity(0.5))
         .alert("알림", isPresented: $showAlert) {
             Button("확인", role: .cancel) { }
         } message: {
@@ -39,35 +102,44 @@ struct TeumNoteWriteView: View {
     }
     
     private func titleFieldView() -> some View {
-        TextField("제목을 입력해 주세요.", text: $titleText, prompt: Text("제목을 입력해 주세요."))
+        TextField("제목", text: $titleText, prompt: Text("오늘 혼놀은 어떠셨어요?"))
             .bold()
             .font(.title2)
     }
     
     private func datePickerView() -> some View {
         VStack(alignment: .leading, spacing: 4) {
-            DatePicker("날짜를 선택해 주세요.", selection: $selectedDate, displayedComponents: [.date])
+            DatePicker("날짜", selection: $selectedDate, displayedComponents: [.date])
                 .datePickerStyle(.compact)
                 .labelsHidden()
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(8)
+                
         }
+    }
+    
+    private func districtPickerView() -> some View {
+        Picker("구를 선택해 주세요.", selection: $selectedDistrict) {
+            ForEach(SeoulDistrict.allCases, id: \.self) { district in
+                Text(district.koreanName).tag(district.rawValue)
+            }
+        }
+        .pickerStyle(.menu)
+        .foregroundStyle(.black)
+        .background(Color.gray.opacity(0.2))
+        .cornerRadius(8)
     }
     
     private func contentFieldView() -> some View {
         ZStack {
-            // background
-            RoundedRectangle(cornerRadius: 8)
-                .stroke(.gray, lineWidth: 1)
-            
-            // content
             TextEditor(text: $contentText)
                 .background(.clear)
                 .overlay(alignment: .topLeading) {
                     Text("내용을 입력해 주세요.")
                         .foregroundStyle(contentText.isEmpty ? .gray : .clear)
-                        .padding(10)
+                        .padding(12)
                         .allowsHitTesting(false)
                 }
-                .border(.gray)
                 .clipShape(.rect(cornerRadius: 10))
         }
     }
@@ -121,10 +193,11 @@ struct TeumNoteWriteView: View {
                         }) {
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundColor(.white)
+                                .padding(4)
                                 .background(Color.black.opacity(0.6))
                                 .clipShape(Circle())
                         }
-                        .offset(x: 5, y: -5)
+                        .offset(x: -5, y: 5)
                     }
                 }
             }
@@ -137,12 +210,12 @@ struct TeumNoteWriteView: View {
                 await saveNoteToFirestore()
             }
         } label: {
-            Text("SAVE")
+            Text("기록하기")
                 .font(.headline)
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(Color.blue)
+                .background(Color.deepNavyBlue)
                 .cornerRadius(10)
         }
         
