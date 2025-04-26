@@ -27,7 +27,7 @@ struct ContentView: View {
                         Image(systemName: "2.square.fill")
                         Text("커뮤니티")
                     }
-                FireStoreTestView()
+                TeumNoteView()
                     .tabItem {
                         Image(systemName: "3.square.fill")
                         Text("틈노트")

@@ -24,3 +24,21 @@ struct Note: Identifiable, Codable {
     var createdAt: Date                         // 노트 생성 시각
     var updatedAt: Date?                        // 노트 수정 시각 (수정 시점, 없으면 nil), 이건 현재 필요 없다면 주석처리 하고 사용
 }
+
+extension Note {
+    static var mocking: [Note] {
+        (0..<30).map { index in
+            Note(
+                userId: "test-user",
+                title: "Test Note \(index + 1)",
+                date: Calendar.current.date(byAdding: .day, value: -index, to: Date()) ?? Date(),
+                socialBattery: Double.random(in: 1...100),
+                district: ["강남구", "서초구", "마포구", "성동구", "종로구"].randomElement() ?? "강남구",
+                content: "이것은 테스트용 노트입니다. 인덱스: \(index + 1)",
+                imagePaths: [],
+                isPublic: Bool.random(),
+                createdAt: Date(),
+            )
+        }
+    }
+}
