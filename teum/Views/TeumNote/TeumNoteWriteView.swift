@@ -14,7 +14,9 @@ struct TeumNoteWriteView: View {
     @State private var titleText = ""
     @State private var selectedDate = Date()
     @State private var selectedDistrict: SeoulDistrict = .gangnam
+    @State private var socialBattery: Double = 50
     @State private var contentText = ""
+    
     @State private var selectedPhotos: [PhotosPickerItem] = []
     @State private var selectedUIImages: [UIImage] = []
     
@@ -80,25 +82,39 @@ struct TeumNoteWriteView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            titleFieldView()
-            HStack {
-                datePickerView()
-                districtPickerView()
+        VStack {
+            Form {
+                Section(header: Text("오늘의 혼놀 기록")) {
+                    TextField("제목", text: $titleText)
+                    DatePicker("날짜", selection: $selectedDate, displayedComponents: .date)
+                    districtPickerView()
+                }
+                Section {
+                    contentFieldView()
+                }
+                Section(header: Text("오늘의 소셜 배터리 점수는?")) {
+                    Slider(value: $socialBattery, in: 0...100, step: 1) {
+                        Text("소셜 배터리")
+                    }
+                    Text("\(Int(socialBattery))%")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                }
             }
-            contentFieldView()
-            photoPickerView()
+            .alert("알림", isPresented: $showAlert) {
+                Button("확인", role: .cancel) { }
+            } message: {
+                Text(alertMessage)
+            }
+            HStack {
+                Spacer()
+                photoPickerView()
+            }
+            .padding(.trailing)
             selectedPhotoPreviewView()
             saveButton()
         }
-        .padding(.top, 30)
-        .padding(.horizontal, 20)
-        .background(Color.softLavender.opacity(0.5))
-        .alert("알림", isPresented: $showAlert) {
-            Button("확인", role: .cancel) { }
-        } message: {
-            Text(alertMessage)
-        }
+        .background(Color(UIColor.systemGroupedBackground))
     }
     
     private func titleFieldView() -> some View {
@@ -119,29 +135,23 @@ struct TeumNoteWriteView: View {
     }
     
     private func districtPickerView() -> some View {
-        Picker("구를 선택해 주세요.", selection: $selectedDistrict) {
+        Picker("장소", selection: $selectedDistrict) {
             ForEach(SeoulDistrict.allCases, id: \.self) { district in
                 Text(district.koreanName).tag(district.rawValue)
             }
         }
         .pickerStyle(.menu)
         .foregroundStyle(.black)
-        .background(Color.gray.opacity(0.2))
-        .cornerRadius(8)
     }
     
     private func contentFieldView() -> some View {
-        ZStack {
-            TextEditor(text: $contentText)
-                .background(.clear)
-                .overlay(alignment: .topLeading) {
-                    Text("내용을 입력해 주세요.")
-                        .foregroundStyle(contentText.isEmpty ? .gray : .clear)
-                        .padding(12)
-                        .allowsHitTesting(false)
-                }
-                .clipShape(.rect(cornerRadius: 10))
-        }
+        TextEditor(text: $contentText)
+            .overlay(alignment: .topLeading) {
+                Text("내용을 입력해 주세요.")
+                    .foregroundStyle(contentText.isEmpty ? .gray : .clear)
+                    .padding(12)
+                    .allowsHitTesting(false)
+            }
     }
     
     private func photoPickerView() -> some View {
@@ -202,6 +212,7 @@ struct TeumNoteWriteView: View {
                 }
             }
         }
+        .padding(.horizontal)
     }
     
     private func saveButton() -> some View {
@@ -218,11 +229,11 @@ struct TeumNoteWriteView: View {
                 .background(Color.deepNavyBlue)
                 .cornerRadius(10)
         }
-        
+        .padding(.horizontal)
     }
     
     private func saveNoteToFirestore() async {
-        let uid = "test-user"
+        let uid = UserDefaultsManager.shared.userId
 
         do {
             try await FireStoreManager.shared.saveTestUser()
@@ -233,17 +244,15 @@ struct TeumNoteWriteView: View {
         }
 
         let note = Note(
-            id: nil,
             userId: uid,
             title: titleText,
             date: selectedDate,
-            socialBattery: 50,
+            socialBattery: socialBattery,
             district: selectedDistrict.rawValue,
             content: contentText,
             imagePaths: [],  // TODO: 이미지 어떻게 저장할건지 논의 필요
             isPublic: UserDefaultsManager.shared.isTeumNotePublic,
             createdAt: Date(),
-            updatedAt: nil
         )
 
         do {
