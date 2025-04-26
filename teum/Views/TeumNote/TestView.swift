@@ -13,11 +13,11 @@ import FirebaseFirestore
  https://console.firebase.google.com/project/teum-1d047/firestore/databases/-default-/data/~2FUsers~2Ftest-user?hl=ko&fb_gclid=CjwKCAjwk43ABhBIEiwAvvMEB_j08nLbdH75G5DBExUK3gjMApYDal1KAA9ql8CpLg8sgJf1UTKObhoC8_kQAvD_BwE
  */
 struct FireStoreTestView: View {
-    @State private var title: String = ""
-    @State private var content: String = ""
+    @State private var titleText: String = ""
+    @State private var contentText: String = ""
     @State private var placeName: String = ""
-    @State private var latitude: String = ""
-    @State private var longitude: String = ""
+    // @State private var latitude: String = ""
+    // @State private var longitude: String = ""
     @State private var socialBattery: Double = 50
     @State private var selectedDate: Date = Date()
     @State private var isPublic: Bool = true
@@ -29,8 +29,8 @@ struct FireStoreTestView: View {
         NavigationStack {
             Form {
                 Section(header: Text("기본 정보")) {
-                    TextField("제목", text: $title)
-                    TextField("내용", text: $content)
+                    TextField("제목", text: $titleText)
+                    TextField("내용", text: $contentText)
                     DatePicker("날짜", selection: $selectedDate, displayedComponents: .date)
                     Toggle("커뮤니티 공개", isOn: $isPublic)
                 }
@@ -54,20 +54,20 @@ struct FireStoreTestView: View {
 
                 Button("노트 저장") {
                     Task {
-                        await saveNote()
+                        await saveNoteToFirestore()
                     }
                 }
             }
             .navigationTitle("테스트 노트 작성")
-            .alert("알림", isPresented: $showAlert) {
-                Button("확인", role: .cancel) { }
-            } message: {
-                Text(alertMessage)
-            }
+        }
+        .alert("알림", isPresented: $showAlert) {
+            Button("확인", role: .cancel) { }
+        } message: {
+            Text(alertMessage)
         }
     }
 
-    private func saveNote() async {
+    private func saveNoteToFirestore() async {
         let uid = "test-user"
 
         do {
@@ -78,24 +78,18 @@ struct FireStoreTestView: View {
             return
         }
 
-        guard let lat = Double(latitude), let lng = Double(longitude) else {
-            alertMessage = "위도/경도를 올바르게 입력해주세요."
-            showAlert = true
-            return
-        }
-
         let note = Note(
             id: nil,
             userId: uid,
-            title: title,
+            title: titleText,
             date: selectedDate,
-            socialBattery: Int(socialBattery),
-            placeName: placeName,
-            latitude: lat,
-            longitude: lng,
-            content: content,
+            socialBattery: 50,
+            placeName: "",
+            latitude: 0,
+            longitude: 0,
+            content: contentText,
             imagePaths: [],
-            isPublic: isPublic,
+            isPublic: true,
             createdAt: Date(),
             updatedAt: nil
         )

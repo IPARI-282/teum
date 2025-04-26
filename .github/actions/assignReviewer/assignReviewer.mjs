@@ -22,23 +22,15 @@ import fetch from "node-fetch";
       actionType === "synchronize" ? "🔄 커밋이 추가되었습니다.\n" : "";
 
     let reviewer;
-    if (pr.requested_reviewers.length > 0) {
-      reviewer = REVIEWERS.find(
-        (r) => r.githubName === pr.requested_reviewers[0].login
-      );
-    } else {
-      const candidates = REVIEWER_CANDIDATES.filter((r) => r !== prAuthor);
-      const selected =
-        candidates[Math.floor(Math.random() * candidates.length)];
-      await octokit.rest.pulls.requestReviewers({
-        owner,
-        repo,
-        pull_number: pullNumber,
-        reviewers: [selected],
-      });
-      reviewer = REVIEWERS.find((r) => r.githubName === selected);
-    }
-
+    const candidates = REVIEWER_CANDIDATES.filter((r) => r !== prAuthor);
+    const selected = candidates[Math.floor(Math.random() * candidates.length)];
+    await octokit.rest.pulls.requestReviewers({
+      owner,
+      repo,
+      pull_number: pullNumber,
+      reviewers: [selected],
+    });
+    reviewer = REVIEWERS.find((r) => r.githubName === selected);
     if (pr.assignees.length === 0) {
       await octokit.rest.issues.addAssignees({
         owner,
