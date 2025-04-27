@@ -12,7 +12,6 @@ enum UserDefaultsKeys {
     static let name = "name"
     static let email = "email"
     static let profileImageURL = "profileImage"
-    static let isTeumNotePublic = "isTeumNotePrivate"
 }
 
 final class UserDefaultsManager {
@@ -22,7 +21,6 @@ final class UserDefaultsManager {
     @AppStorage(UserDefaultsKeys.name) var name: String = ""
     @AppStorage(UserDefaultsKeys.email) var email: String = ""
     @AppStorage(UserDefaultsKeys.profileImageURL) var profileImageURL: String = ""
-    @AppStorage(UserDefaultsKeys.isTeumNotePublic) var isTeumNotePublic: Bool = true    // 틈 노트 기본값은 공개로 설정
 
     private init() { }
 
