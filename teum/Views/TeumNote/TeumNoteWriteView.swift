@@ -14,6 +14,7 @@ struct TeumNoteWriteView: View {
     @State private var titleText = ""
     @State private var selectedDate = Date()
     @State private var selectedDistrict: SeoulDistrict = .gangnam
+    @State private var isPublic: Bool = true
     @State private var socialBattery: Double = 50
     @State private var contentText = ""
     
@@ -88,6 +89,7 @@ struct TeumNoteWriteView: View {
                     TextField("제목", text: $titleText)
                     DatePicker("날짜", selection: $selectedDate, displayedComponents: .date)
                     districtPickerView()
+                    Toggle("공개", isOn: $isPublic)
                 }
                 Section {
                     contentFieldView()
@@ -117,22 +119,6 @@ struct TeumNoteWriteView: View {
         .background(Color(UIColor.systemGroupedBackground))
     }
     
-    private func titleFieldView() -> some View {
-        TextField("제목", text: $titleText, prompt: Text("오늘 혼놀은 어떠셨어요?"))
-            .bold()
-            .font(.title2)
-    }
-    
-    private func datePickerView() -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            DatePicker("날짜", selection: $selectedDate, displayedComponents: [.date])
-                .datePickerStyle(.compact)
-                .labelsHidden()
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(8)
-                
-        }
-    }
     
     private func districtPickerView() -> some View {
         Picker("장소", selection: $selectedDistrict) {
@@ -152,6 +138,7 @@ struct TeumNoteWriteView: View {
                     .padding(12)
                     .allowsHitTesting(false)
             }
+            .frame(maxWidth: .infinity, maxHeight: 200)
     }
     
     private func photoPickerView() -> some View {
@@ -229,7 +216,7 @@ struct TeumNoteWriteView: View {
                 .background(Color.deepNavyBlue)
                 .cornerRadius(10)
         }
-        .padding(.horizontal)
+        .padding([.horizontal, .bottom])
     }
     
     private func saveNoteToFirestore() async {
@@ -251,18 +238,17 @@ struct TeumNoteWriteView: View {
             district: selectedDistrict.rawValue,
             content: contentText,
             imagePaths: [],  // TODO: 이미지 어떻게 저장할건지 논의 필요
-            isPublic: UserDefaultsManager.shared.isTeumNotePublic,
+            isPublic: isPublic,
             createdAt: Date(),
         )
 
         do {
             try await FireStoreManager.shared.addNote(note)
             alertMessage = "노트 저장 성공! (userId: \(uid))"
-            UserDefaultsManager.shared.isTeumNotePublic = true  // 기본값으로 다시 설정
         } catch {
             alertMessage = "노트 저장 실패: \(error.localizedDescription)"
         }
-
+        
         showAlert = true
     }
 

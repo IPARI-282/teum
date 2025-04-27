@@ -10,76 +10,71 @@ import SwiftUI
 struct TeumNoteView: View {
     
     @State private var myNotes: [Note] = []
-    @State private var showOptions = false
-    @State private var navigateToWriteView = false
-    @State private var flippedStates: [Bool] = []
-    
+    @State private var navigateToWriteView = false  // TODO: 네비게이션 관리 필요
     
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottomTrailing) {
-                // 스크롤뷰
-                ScrollView {
-                    LazyVStack(spacing: 16) {
-                        ForEach(Array(flippedStates.enumerated()), id: \.offset) { index, _ in
-                            FlipCard(flipped: $flippedStates[index])
-                                .onTapGesture {
-                                    flippedStates[index].toggle()
-                                }
-                        }
-                    }
-                }
-                .padding()
-                
-                // 플로팅 버튼
-                if showOptions {
-                    VStack(spacing: 12) {
-                        Button(action: {
-                            navigateToWriteView = true
-                        }) {
-                            Image(systemName: "square.and.pencil")
-                                .font(.system(size: 20))
-                                .foregroundColor(.white)
-                                .frame(width: 50, height: 50)
-                                .background(Color.blue)
-                                .clipShape(Circle())
-                        }
-                        Button(action: {
-                            navigateToWriteView = true
-                        }) {
-                            Image(systemName: "pencil")
-                                .font(.system(size: 20))
-                                .foregroundColor(.white)
-                                .frame(width: 50, height: 50)
-                                .background(Color.green)
-                                .clipShape(Circle())
-                        }
-                    }
-                    .offset(x: -5, y: 10)
-                    .transition(.scale)
-                }
-                
-                Button {
-                    withAnimation { showOptions.toggle() }
-                } label: {
-                    Image(systemName: "square.and.pencil")
-                        .font(.system(size: 20))
-                        .foregroundColor(.white)
-                        .frame(width: 40, height: 40)
-                        .background(Color.mainColor)
-                        .clipShape(Circle())
-                        .padding()
-                }
+                titleView()
+                myNoteList()
+                floatingButton()
             }
             .navigationDestination(isPresented: $navigateToWriteView) {
                 TeumNoteWriteView()
             }
-            .onAppear {
-                if flippedStates.count < 20 {
-                    flippedStates = Array(repeating: false, count: 20)
+            .task {
+                do {
+                    let data = try await FireStoreManager.shared.fetchPublicNotes()
+                    myNotes = data
+                } catch {
+                    pprint("Error fetching notes: \(error.localizedDescription)")
                 }
             }
         }
+    }
+    
+    private func titleView() -> some View {
+        // TODO: 다른 화면 보고 디자인 맞춰야 함
+        VStack {
+            HStack {
+                Text("내 노트")
+                    .font(.system(size: 20))
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
+                Spacer()
+            }
+            .padding(.horizontal)
+            Spacer()
+        }
+    }
+    
+    private func myNoteList() -> some View {
+        ScrollView {
+            LazyVStack(spacing: 16) {
+                ForEach(myNotes, id: \.id) { note in
+                    FlipCard(flipped: .constant(false))
+                        .onTapGesture {
+                            // 카드 뒤집기 로직 추가 필요
+                        }
+                }
+            }
+        }
+        .padding()
+    }
+    
+    private func floatingButton() -> some View {
+        Button {
+            navigateToWriteView = true
+        } label: {
+            Image(systemName: "square.and.pencil")
+                .font(.system(size: 20))
+                .foregroundColor(.white)
+                .frame(width: 40, height: 40)
+                .background(Color.mainColor)
+                .clipShape(Circle())
+                .padding()
+        }
+        .padding(.bottom)
     }
     
 }
