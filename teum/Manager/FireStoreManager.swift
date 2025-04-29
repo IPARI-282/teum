@@ -160,3 +160,29 @@ final class FireStoreManager {
         }
     }
 }
+
+extension FireStoreManager {
+    
+    func fetchTrendingNotes() async throws -> [Note] {
+        let snapshot = try await db.collection("Notes")
+            .whereField("isPublic", isEqualTo: true)
+            .getDocuments()
+        
+        let notes = snapshot.documents.compactMap { document in
+            try? document.data(as: Note.self)
+        }
+        
+        return Array(notes.shuffled().prefix(10))
+    }
+    
+    func fetchLatestNotes() async throws -> [Note] {
+        let snapshot = try await db.collection("Notes")
+            .whereField("isPublic", isEqualTo: true)
+            .order(by: "createdAt", descending: true)
+            .getDocuments()
+        
+        return snapshot.documents.compactMap { document in
+            try? document.data(as: Note.self)
+        }
+    }
+}

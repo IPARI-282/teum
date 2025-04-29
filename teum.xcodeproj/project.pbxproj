@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		BFB8F2D82DB77D4F00C5A7CB /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = BFB8F2D72DB77D4F00C5A7CB /* GoogleSignIn */; };
-		C41657F32DC1023F00E472B3 /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = C41657F22DC1023F00E472B3 /* KakaoMapsSDK-SPM */; };
 		C4182EA22DA26B97006EF403 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4182EA12DA26B97006EF403 /* ContentView.swift */; };
 		C4182EA72DA26B9A006EF403 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4182EA62DA26B9A006EF403 /* Preview Assets.xcassets */; };
 		F138A1622DAF5FA2000A6DE9 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F138A1612DAF5FA2000A6DE9 /* FirebaseAuth */; };
 		F138A1642DAF5FA2000A6DE9 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = F138A1632DAF5FA2000A6DE9 /* FirebaseCrashlytics */; };
 		F138A1662DAF5FA2000A6DE9 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F138A1652DAF5FA2000A6DE9 /* FirebaseFirestore */; };
+		F1641E452DC13117009E99DB /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = F1641E442DC13117009E99DB /* KakaoMapsSDK-SPM */; };
 		F1BB0F382DC11A0F0040F75B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F1BB0F372DC11A0F0040F75B /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -50,7 +50,7 @@
 			files = (
 				F138A1622DAF5FA2000A6DE9 /* FirebaseAuth in Frameworks */,
 				BFB8F2D82DB77D4F00C5A7CB /* GoogleSignIn in Frameworks */,
-				C41657F32DC1023F00E472B3 /* KakaoMapsSDK-SPM in Frameworks */,
+				F1641E452DC13117009E99DB /* KakaoMapsSDK-SPM in Frameworks */,
 				F138A1642DAF5FA2000A6DE9 /* FirebaseCrashlytics in Frameworks */,
 				F138A1662DAF5FA2000A6DE9 /* FirebaseFirestore in Frameworks */,
 			);
@@ -178,7 +178,7 @@
 			packageReferences = (
 				F138A1602DAF5FA2000A6DE9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				BFB8F2D62DB77D4F00C5A7CB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
-				C41657F12DC1023F00E472B3 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */,
+				F1641E432DC13117009E99DB /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */,
 			);
 			productRefGroup = C4182E9D2DA26B97006EF403 /* Products */;
 			projectDirPath = "";
@@ -351,7 +351,6 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -389,7 +388,6 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -440,20 +438,20 @@
 				minimumVersion = 8.0.0;
 			};
 		};
-		C41657F12DC1023F00E472B3 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.12.5;
-			};
-		};
 		F138A1602DAF5FA2000A6DE9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 11.11.0;
+			};
+		};
+		F1641E432DC13117009E99DB /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.12.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -463,11 +461,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BFB8F2D62DB77D4F00C5A7CB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignIn;
-		};
-		C41657F22DC1023F00E472B3 /* KakaoMapsSDK-SPM */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C41657F12DC1023F00E472B3 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */;
-			productName = "KakaoMapsSDK-SPM";
 		};
 		F138A1612DAF5FA2000A6DE9 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -483,6 +476,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F138A1602DAF5FA2000A6DE9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		F1641E442DC13117009E99DB /* KakaoMapsSDK-SPM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F1641E432DC13117009E99DB /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */;
+			productName = "KakaoMapsSDK-SPM";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
