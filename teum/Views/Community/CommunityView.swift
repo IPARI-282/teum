@@ -9,21 +9,20 @@ import SwiftUI
 
 struct CommunityView: View {
     @EnvironmentObject var coordinator: AppCoordinator<Destination>
-    var viewModel = CommunityViewModel(fireStoreManager: FireStoreManager.shared)
+    @StateObject var viewModel = CommunityViewModel(fireStoreManager: FireStoreManager.shared)
     
     var body: some View {
             VStack(spacing: 0) {
                 CustomHeaderView(title: "틈 커뮤니티")
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 20) {
-                        trendingTeumNotes()
-                        teumListView(communityList: viewModel.communityList)
-
+                        trendingTeumNotes(trendingList: viewModel.trendingNotes)
+                        teumListView(latestList: viewModel.latestNotes)
                     }
                 }
             }
             .task {
-                await viewModel.fetchCommunityList()
+                await viewModel.fetchNotes()
             }
             .padding(.bottom, 36)
             .navigationBarHidden(true)
@@ -31,7 +30,7 @@ struct CommunityView: View {
 }
 
 extension CommunityView {
-    func trendingTeumNotes() -> some View {
+    func trendingTeumNotes(trendingList: [Note]) -> some View {
         Section(header:
             Text("인기 틈 노트 📝")
                 .font(.title3.bold())
@@ -39,23 +38,24 @@ extension CommunityView {
         ) {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
-                    RecentTeumNotes(rank: 1, imageName: "article1", title: "요즘 나한테 핫한 장소", subtitle: "손흥민")
-                    
-                    RecentTeumNotes(rank: 2, imageName: "article2", title: "정말 휴식이 필요할 때 추천합니다", subtitle: "박보영")
+                    ForEach(trendingList.indices, id: \.self) { index in
+                        let note = trendingList[index]
+                        RecentTeumNotes(rank: index + 1, imageName: "article\(index + 1)", title: note.title, subtitle: note.district)
+                    }
                 }
                 .padding(.horizontal)
             }
         }
     }
     
-    func teumListView(communityList: [Note]) -> some View {
+    func teumListView(latestList: [Note]) -> some View {
         Section(header:
             Text("최신 틈 노트 📝")
                 .font(.title3.bold())
                 .padding(.horizontal)
         ) {
             VStack {
-                ForEach(viewModel.communityList) { note in
+                ForEach(latestList) { note in
                     teumNoteCardView(teumNote: note)
                 }
             }
@@ -65,33 +65,39 @@ extension CommunityView {
     func teumNoteCardView(teumNote: Note) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 8) {
-                Circle()
-                    .fill(Color.gray.opacity(0.3))
+                if let firstImagePath = teumNote.imagePaths?.first,
+                   let url = URL(string: firstImagePath) {
+                    AsyncImage(url: url) { image in
+                        image
+                            .resizable()
+                            .clipShape(Circle())
+                    } placeholder: {
+                        Circle()
+                            .fill(Color.gray.opacity(0.3))
+                    }
                     .frame(width: 36, height: 36)
-
+                } else {
+                    Image("ProfileImage")
+                        .resizable()
+                        .clipShape(Circle())
+                        .frame(width: 36, height: 36)
+                }
+                
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(teumNote.id ?? "")
+                    Text(teumNote.title)
                         .font(.headline)
-                    Text("@codewizard")
+                    Text("\(teumNote.socialBattery.formatted())%")
                         .font(.caption)
                         .foregroundColor(.gray)
                 }
-
+                .padding(.leading, 8)
+                
                 Spacer()
             }
-
-            // MARK: 본문 텍스트
-            Text(teumNote.content)
-                .font(.body)
-                .lineSpacing(4)
-
-            .font(.subheadline)
-            .foregroundColor(.gray)
         }
         .padding()
         .background(RoundedRectangle(cornerRadius: 16).fill(Color.white))
         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
-        .padding(.horizontal)
     }
 }
 
@@ -104,10 +110,25 @@ struct RecentTeumNotes: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             ZStack(alignment: .topLeading) {
-                Rectangle()
-                    .fill(Color.pink.opacity(0.4)) // 임시 배경
+                if let url = URL(string: imageName), imageName.starts(with: "http") {
+                    AsyncImage(url: url) { image in
+                        image
+                            .resizable()
+                            .scaledToFill()
+                    } placeholder: {
+                        Color.gray.opacity(0.2)
+                    }
                     .frame(width: 160, height: 160)
+                    .clipped()
                     .cornerRadius(12)
+                } else {
+                    Image("AppIconPreview")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 160, height: 160)
+                        .clipped()
+                        .cornerRadius(12)
+                }
 
                 Text("\(rank)")
                     .font(.headline)

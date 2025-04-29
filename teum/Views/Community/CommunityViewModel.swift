@@ -10,19 +10,27 @@ import Combine
 import SwiftUICore
 
 final class CommunityViewModel: ObservableObject {
-    @Published var communityList: [Note] = []
+    @Published var trendingNotes: [Note] = []
+    @Published var latestNotes: [Note] = []
     
     private var cancellables = Set<AnyCancellable>()
     private var fireStoreManager: FireStoreManager
-    
+
     init(fireStoreManager: FireStoreManager) {
         self.fireStoreManager = fireStoreManager
     }
     
-    func fetchCommunityList() async {
+    func fetchNotes() async {
+        async let trending = fireStoreManager.fetchTrendingNotes()
+        async let latest = fireStoreManager.fetchLatestNotes()
+        
         do {
-            let result = try await FireStoreManager.shared.fetchPublicNotes()
-            self.communityList = result
+            let trendingResult = try await trending
+            let latestResult = try await latest
+            await MainActor.run {
+                self.trendingNotes = trendingResult
+                self.latestNotes = latestResult
+            }
         } catch {
             print("❌ 에러 발생: \(error)")
         }
