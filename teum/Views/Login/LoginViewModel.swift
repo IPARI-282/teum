@@ -124,7 +124,7 @@ final class LoginViewModel: ViewModelType {
         // JWT 헤더 생성
         let header = [
             "alg": "ES256",
-            "kid": "YOUR_PRIVATE_KEY_ID" // Apple Developer 계정에서 가져온 키 ID
+            "kid": APIKey.kid // Apple Developer 계정에서 가져온 키 ID
         ]
         
         // 현재 시간과 만료 시간 (10분 후)
@@ -133,7 +133,7 @@ final class LoginViewModel: ViewModelType {
         
         // JWT 페이로드 생성
         let payload = [
-            "iss": "YOUR_TEAM_ID", // Apple Developer 팀 ID
+            "iss": APIKey.iss, // Apple Developer 팀 ID
             "iat": currentTime,
             "exp": expirationTime,
             "aud": "https://appleid.apple.com",
@@ -176,7 +176,7 @@ final class LoginViewModel: ViewModelType {
     // 개인 키 로드
     private func loadPrivateKey() -> SecKey? {
         // 앱 번들에서 p8 파일 로드
-        guard let path = Bundle.main.path(forResource: "AuthKey_YOUR_KEY_ID", ofType: "p8"),
+        guard let path = Bundle.main.path(forResource: "AuthKey_\(APIKey.kid)", ofType: "p8"),
               let keyData = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
             return nil
         }
@@ -271,10 +271,14 @@ final class LoginViewModel: ViewModelType {
                     guard let user = authResult?.user else { return }
                     
                     // 1. UserDefaults에 자주 사용하는 기본 정보 저장
+                    print("나다",user.uid)
                     UserDefaultsManager.shared.userId = user.uid
                     UserDefaultsManager.shared.name = user.displayName ?? ""
                     UserDefaultsManager.shared.email = user.email ?? ""
-                    
+                    //UserDefaultsManager.shared.updateUser(user.uid)
+//                    UserDefaults.standard.setValue(user.uid, forKey: UserDefaultsKeys.userId)
+//                    UserDefaults.standard.setValue(user.displayName, forKey: UserDefaultsKeys.name)
+
                     // 2. Firestore에 사용자 정보 저장 (최초 로그인 시)
                     Task {
                         do {
@@ -292,6 +296,7 @@ final class LoginViewModel: ViewModelType {
                             print("Firestore 사용자 정보 처리 실패: \(error)")
                         }
                     }
+                    print("유저디폴트 uid",UserDefaults.standard.string(forKey: UserDefaultsKeys.userId))
                 }
             }
         case .failure(let error):
