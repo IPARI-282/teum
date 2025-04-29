@@ -38,7 +38,7 @@ struct ContentView: View {
                 case .myPage:
                     MyPageView()
                 case .teumNote:
-                    FireStoreTestView()
+                    TeumNoteView()
                 case .lookingForTeum:
                     MapView()
                 case .login:

@@ -37,6 +37,7 @@ struct MyPageView: View {
                                 // 앱 정보 섹션
                                 appInfoSection()
                                 
+                                Spacer()
                                 // 로그아웃 버튼
                                 Button(action: {
                                     // Firebase 로그아웃
@@ -52,7 +53,7 @@ struct MyPageView: View {
                                         .foregroundColor(.white)
                                         .cornerRadius(8)
                                 }
-                                .padding()
+                                .padding(.horizontal)
                                 
                                 // 회원탈퇴 버튼
                                 Button(action: {
@@ -66,7 +67,7 @@ struct MyPageView: View {
                                         .foregroundColor(.white)
                                         .cornerRadius(8)
                                 }
-                                .padding()
+                                .padding(.horizontal)
 
                                 .alert(isPresented: $isShowingWithdrawAlert) {
                                     Alert(
