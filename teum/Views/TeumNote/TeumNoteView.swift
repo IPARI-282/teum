@@ -11,51 +11,50 @@ struct TeumNoteView: View {
     
     @EnvironmentObject var coordinator: AppCoordinator<Destination>
     @State private var myNotes: [Note] = []
+    @State private var flippedStates: [String: Bool] = [:]
     
     var body: some View {
+        VStack {
+            CustomHeaderView(title: "틈 노트")
             ZStack(alignment: .bottomTrailing) {
-                titleView()
                 myNoteList()
                 floatingButton()
             }
-            .task {
-                do {
-                    let data = try await FireStoreManager.shared.fetchPublicNotes()
-                    myNotes = data
-                    
-                } catch {
-                    pprint("Error fetching notes: \(error.localizedDescription)")
-                }
+        }
+        .task {
+            do {
+                let data = try await FireStoreManager.shared.fetchPublicNotes()
+                myNotes = data
+                flippedStates = Dictionary(uniqueKeysWithValues: data.compactMap {
+                    guard let id = $0.id else { return nil }
+                    return (id, false)
+                })
+            } catch {
+                pprint("Error fetching notes: \(error.localizedDescription)")
             }
+        }
     }
     
-    private func titleView() -> some View {
-        // TODO: 다른 화면 보고 디자인 맞춰야 함
-        VStack {
-            HStack {
-                Text("내 노트")
-                    .font(.system(size: 20))
-                    .fontWeight(.bold)
-                    .foregroundColor(.black)
-                Spacer()
-            }
-            .padding(.horizontal)
-            Spacer()
-        }
+    private func bindingForNoteFlip(id: String) -> Binding<Bool> {
+        return Binding(
+            get: { flippedStates[id] ?? false },
+            set: { flippedStates[id] = $0 }
+        )
     }
     
     private func myNoteList() -> some View {
         ScrollView {
             LazyVStack(spacing: 16) {
-                ForEach(myNotes, id: \.id) { note in
-                    FlipCard(flipped: .constant(false))
-                        .onTapGesture {
-                            // 카드 뒤집기 로직 추가 필요
-                        }
+                ForEach($myNotes, id: \.id) { note in
+                    FlipCard(
+                        flipped: bindingForNoteFlip(id: note.id ?? ""),
+                        front: note.title,
+                        back: note.content
+                    )
                 }
             }
         }
-        .padding()
+        .padding(.horizontal)
     }
     
     private func floatingButton() -> some View {
