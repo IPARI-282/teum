@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension Color {
-    static let mainColor = Color(hex: "#00B463")
+    static let mainColor = Color(hex: "#00B493")
     static let deepNavyBlue = Color(hex: "#003366")
     static let greenAurora = Color(hex: "#4CA376")
     static let softLavender = Color(hex: "#E5E5FA")

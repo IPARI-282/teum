@@ -49,6 +49,18 @@ final class LoginViewModel: ViewModelType {
             self?.isAuthenticated = user != nil
             self?.isLoading = false
         }
+        
+        // 디버깅용 코드 추가
+           if let currentUser = Auth.auth().currentUser {
+               print("🔑 현재 로그인된 사용자: \(currentUser.uid)")
+               print("📝 DisplayName: \(currentUser.displayName ?? "없음")")
+               print("📧 Email: \(currentUser.email ?? "없음")")
+           } else {
+               print("🔒 로그인된 사용자 없음")
+           }
+           
+           // UserDefaults 값 확인
+           print("🗄️ UserDefaults userName: \(UserDefaults.standard.string(forKey: "userName") ?? "없음")")
     }
     //리소스 정리
     deinit {
@@ -72,7 +84,147 @@ final class LoginViewModel: ViewModelType {
             handleAppleLoginResult(result)
         }
     }
-                                           
+        
+    func withDrow() {
+        // 현재 사용자 존재 확인
+        guard let user = Auth.auth().currentUser else {
+            print("❌ 회원 탈퇴 실패: 로그인 정보가 없습니다. 다시 로그인 해주세요.")
+            return
+        }
+        
+        // 애플 로그인으로 로그인한 경우
+        if let providerID = user.providerData.first?.providerID, providerID == "apple.com" {
+            // 애플 리프레시 토큰 확인
+            if let token = retrieveAppleRefreshToken() {
+                let clientSecret = createClientSecret()
+                
+                // 재인증 시도
+                appleSignInManager.startSignInWithAppleFlow() // 애플 로그인 재인증
+                
+                // 토큰 취소 및 로그아웃
+                appleSignInManager.revokeAppleToken(clientSecret: clientSecret, token: token) {
+                    try? Auth.auth().signOut()
+                }
+            } else {
+                // 토큰이 없는 경우 그냥 로그아웃
+                try? Auth.auth().signOut()
+            }
+        } else {
+            // 일반 로그아웃
+            try? Auth.auth().signOut()
+        }
+    }
+    
+    func retrieveAppleRefreshToken() -> String? {
+        return UserDefaults.standard.string(forKey: "appleRefreshToken")
+
+    }
+    
+    func createClientSecret() -> String {
+        // JWT 헤더 생성
+        let header = [
+            "alg": "ES256",
+            "kid": "YOUR_PRIVATE_KEY_ID" // Apple Developer 계정에서 가져온 키 ID
+        ]
+        
+        // 현재 시간과 만료 시간 (10분 후)
+        let currentTime = Int(Date().timeIntervalSince1970)
+        let expirationTime = currentTime + 600 // 10분
+        
+        // JWT 페이로드 생성
+        let payload = [
+            "iss": "YOUR_TEAM_ID", // Apple Developer 팀 ID
+            "iat": currentTime,
+            "exp": expirationTime,
+            "aud": "https://appleid.apple.com",
+            "sub": Bundle.main.bundleIdentifier! // 앱 번들 ID
+        ] as [String: Any]
+        
+        // 헤더와 페이로드를 Base64URL로 인코딩
+        guard let headerData = try? JSONSerialization.data(withJSONObject: header),
+              let payloadData = try? JSONSerialization.data(withJSONObject: payload),
+              let headerBase64 = base64URLEncode(headerData),
+              let payloadBase64 = base64URLEncode(payloadData) else {
+            return ""
+        }
+        
+        // 서명할 데이터 준비
+        let toSign = "\(headerBase64).\(payloadBase64)"
+        guard let dataToSign = toSign.data(using: .utf8) else { return "" }
+        
+        // 서명 생성 (Apple Developer 계정에서 다운로드한 p8 파일에서 추출한 개인 키 사용)
+        guard let privateKey = loadPrivateKey(),
+              let signature = sign(data: dataToSign, with: privateKey),
+              let signatureBase64 = base64URLEncode(signature) else {
+            return ""
+        }
+        
+        // JWT 토큰 반환
+        return "\(toSign).\(signatureBase64)"
+    }
+
+    // Base64URL 인코딩 (표준 Base64에서 URL 안전하게 변환)
+    private func base64URLEncode(_ data: Data) -> String? {
+        let base64 = data.base64EncodedString()
+        let base64URL = base64
+            .replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "/", with: "_")
+            .replacingOccurrences(of: "=", with: "")
+        return base64URL
+    }
+
+    // 개인 키 로드
+    private func loadPrivateKey() -> SecKey? {
+        // 앱 번들에서 p8 파일 로드
+        guard let path = Bundle.main.path(forResource: "AuthKey_YOUR_KEY_ID", ofType: "p8"),
+              let keyData = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
+            return nil
+        }
+        
+        // PEM 형식에서 키 데이터 추출
+        let pemString = String(data: keyData, encoding: .utf8)?
+            .replacingOccurrences(of: "-----BEGIN PRIVATE KEY-----", with: "")
+            .replacingOccurrences(of: "-----END PRIVATE KEY-----", with: "")
+            .replacingOccurrences(of: "\n", with: "")
+        
+        guard let pemData = Data(base64Encoded: pemString ?? "") else {
+            return nil
+        }
+        
+        // 키 생성 파라미터
+        let attributes: [String: Any] = [
+            kSecAttrKeyType as String: kSecAttrKeyTypeECSECPrimeRandom,
+            kSecAttrKeyClass as String: kSecAttrKeyClassPrivate
+        ]
+        
+        // SecKey 객체 생성
+        var error: Unmanaged<CFError>?
+        guard let privateKey = SecKeyCreateWithData(pemData as CFData,
+                                                   attributes as CFDictionary,
+                                                   &error) else {
+            return nil
+        }
+        
+        return privateKey
+    }
+
+    // 데이터 서명
+    private func sign(data: Data, with privateKey: SecKey) -> Data? {
+        var error: Unmanaged<CFError>?
+        guard let signature = SecKeyCreateSignature(privateKey,
+                                                   .ecdsaSignatureMessageX962SHA256,
+                                                   data as CFData,
+                                                   &error) as Data? else {
+            return nil
+        }
+        
+        return signature
+    }
+    
+    func saveAppleRefreshToken(_ token: String) {
+        UserDefaults.standard.set(token, forKey: "appleRefreshToken")
+    }
+    
     //Apple 로그인 요청 처리
     private func handleAppleLoginRequest(_ request: ASAuthorizationAppleIDRequest) {
         let nonce = appleSignInManager.randomNonceString()
@@ -81,6 +233,7 @@ final class LoginViewModel: ViewModelType {
         request.nonce = appleSignInManager.sha256(nonce)
     }
                                            
+    //Apple 로그인 결과 처리
     //Apple 로그인 결과 처리
     private func handleAppleLoginResult(_ result: Result<ASAuthorization, Error>) {
         switch result {
@@ -98,47 +251,46 @@ final class LoginViewModel: ViewModelType {
                     print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
                     return
                 }
+                
+                // 리프레시 토큰 저장 - 이 부분 추가
+                if let authorizationCode = appleIDCredential.authorizationCode,
+                   let codeString = String(data: authorizationCode, encoding: .utf8) {
+                    saveAppleRefreshToken(codeString)
+                }
+                
                 //Firebase 인증 정보 초기화
                 let credential = OAuthProvider.appleCredential(withIDToken: idTokenString, rawNonce: nonce, fullName: appleIDCredential.fullName)
                 
-                //Firebase에 로그인
+                // Firebase 로그인 성공 후
                 Auth.auth().signIn(with: credential) { [weak self] (authResult, error) in
                     if let error = error {
-                        print("Firebase sign-in error: \(error.localizedDescription)")
+                        print("로그인 실패: \(error.localizedDescription)")
                         return
                     }
                     
-                    //로그인 성공
-                    self?.isAuthenticated = true
-                    self?.user = authResult?.user
-
-                    if let fullName = appleIDCredential.fullName,
-                       let givenName = fullName.givenName,
-                       let familyName = fullName.familyName {
-                        let displayName = "\(givenName) \(familyName)"
-                        
-                        UserDefaults.standard.set(displayName, forKey: "userName")
-                        //UserDefaultsManager.shared.updateUser(self?.user)
-                        print(displayName)
-                        print(UserDefaults.standard.string(forKey: "userName"))
-                        // 사용자 프로필 업데이트
-                        let changeRequest =  Auth.auth().currentUser?.createProfileChangeRequest()
-                        changeRequest?.displayName = displayName
-                        changeRequest?.commitChanges(completion: { error in
-                            if let error = error {
-                                print("프로필 업데이트 실패: \(error.localizedDescription)")
-                            } else {
-                                print("프로필 이름 업데이트 성공")
-                                // 업데이트된 사용자 정보 다시 가져오기
-                                Auth.auth().currentUser?.reload { error in
-                                    if let error = error {
-                                        print("사용자 정보 새로고침 실패: \(error)")
-                                    } else {
-                                        self?.user = Auth.auth().currentUser
-                                    }
-                                }
+                    guard let user = authResult?.user else { return }
+                    
+                    // 1. UserDefaults에 자주 사용하는 기본 정보 저장
+                    UserDefaultsManager.shared.userId = user.uid
+                    UserDefaultsManager.shared.name = user.displayName ?? ""
+                    UserDefaultsManager.shared.email = user.email ?? ""
+                    
+                    // 2. Firestore에 사용자 정보 저장 (최초 로그인 시)
+                    Task {
+                        do {
+                            try await FireStoreManager.shared.saveUser(
+                                name: user.displayName ?? "",
+                                email: user.email ?? ""
+                            )
+                            
+                            // 3. Firestore에서 완전한 사용자 정보 가져오기
+                            if let firestoreUser = try await FireStoreManager.shared.fetchUser(by: user.uid) {
+                                // 4. Firestore에서 가져온 정보로 UserDefaults 업데이트
+                                UserDefaultsManager.shared.updateUser(firestoreUser)
                             }
-                        })
+                        } catch {
+                            print("Firestore 사용자 정보 처리 실패: \(error)")
+                        }
                     }
                 }
             }
@@ -146,7 +298,6 @@ final class LoginViewModel: ViewModelType {
             print("Sign in with Apple failed: \(error.localizedDescription)")
         }
     }
-    
     //Google Login
     func loginWithGoogle() {
         GoogleLoginManager.shared.signIn { [weak self] success, error in
@@ -157,6 +308,28 @@ final class LoginViewModel: ViewModelType {
             
             if success {
                 print("Google 로그인 성공")
+                if let user = Auth.auth().currentUser {
+                        UserDefaultsManager.shared.userId = user.uid
+                        UserDefaultsManager.shared.name = user.displayName ?? ""
+                        UserDefaultsManager.shared.email = user.email ?? ""
+                        UserDefaultsManager.shared.profileImageURL = user.photoURL?.absoluteString ?? ""
+                        
+                        // Firestore 처리 추가
+                        Task {
+                            do {
+                                try await FireStoreManager.shared.saveUser(
+                                    name: user.displayName ?? "",
+                                    email: user.email ?? ""
+                                )
+                                
+                                if let firestoreUser = try await FireStoreManager.shared.fetchUser(by: user.uid) {
+                                    UserDefaultsManager.shared.updateUser(firestoreUser)
+                                }
+                            } catch {
+                                print("Firestore 사용자 정보 처리 실패: \(error)")
+                            }
+                        }
+                    }
             }
         }
     }

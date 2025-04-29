@@ -14,7 +14,7 @@ struct LoginView: View {
 
     var body: some View {
         ZStack {
-            Color.softLavender
+            Color.mainColor
                 .ignoresSafeArea()
             
             VStack {

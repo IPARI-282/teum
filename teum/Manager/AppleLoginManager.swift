@@ -175,5 +175,42 @@ extension AppleLoginManager: ASAuthorizationControllerDelegate, ASAuthorizationC
         }
         print("Sign in with Apple errored: \(error)")    }
     
-}
+    func revokeAppleToken(clientSecret: String, token: String, completionHandler: @escaping () -> Void) {
+        guard let url = URL(string: "https://appleid.apple.com/auth/revoke") else { return }
+        
+        // URL 쿼리 파라미터 생성
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
+        components?.queryItems = [
+            URLQueryItem(name: "client_id", value: Bundle.main.bundleIdentifier),
+            URLQueryItem(name: "client_secret", value: clientSecret),
+            URLQueryItem(name: "token", value: token),
+            URLQueryItem(name: "token_type_hint", value: "refresh_token")
+        ]
+        
+        guard let requestURL = components?.url else { return }
+        
+        // HTTP 요청 생성
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        
+        // 요청 실행
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let httpResponse = response as? HTTPURLResponse else { return }
+            
+            if httpResponse.statusCode == 200 {
+                print("애플 토큰 삭제 성공!")
+                // 성공 시 UserDefaults에서 토큰 삭제
+                UserDefaults.standard.removeObject(forKey: "appleRefreshToken")
+                
+                DispatchQueue.main.async {
+                    completionHandler()
+                }
+            } else {
+                print("애플 토큰 삭제 실패! 상태 코드: \(httpResponse.statusCode)")
+            }
+        }
+        
+        task.resume()
+    }}
 
