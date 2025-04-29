@@ -238,7 +238,7 @@ struct TeumNoteWriteView: View {
             title: titleText,
             date: selectedDate,
             socialBattery: 50,
-            district: selectedDistrict.rawValue,
+            district: "구로구",
             content: contentText,
             imagePaths: [],  // TODO: 이미지 어떻게 저장할건지 논의 필요
             isPublic: UserDefaultsManager.shared.isTeumNotePublic,

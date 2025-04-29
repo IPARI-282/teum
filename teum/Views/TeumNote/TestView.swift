@@ -16,8 +16,8 @@ struct FireStoreTestView: View {
     @State private var titleText: String = ""
     @State private var contentText: String = ""
     @State private var placeName: String = ""
-    // @State private var latitude: String = ""
-    // @State private var longitude: String = ""
+    @State private var latitude: String = ""
+    @State private var longitude: String = ""
     @State private var socialBattery: Double = 50
     @State private var selectedDate: Date = Date()
     @State private var isPublic: Bool = true
@@ -84,7 +84,7 @@ struct FireStoreTestView: View {
             title: titleText,
             date: selectedDate,
             socialBattery: 50,
-            placeName: "",
+            district: "",
             latitude: 0,
             longitude: 0,
             content: contentText,
