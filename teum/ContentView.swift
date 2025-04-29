@@ -18,7 +18,7 @@ struct ContentView: View {
                     ProgressView("로딩 중...")
                 } else if loginViewModel.isAuthenticated {
                     TabView { // TabView는 NavigationStack 내부
-                        LookingForTeumView()
+                        MapView()
                             .tabItem { Label("틈찾기", systemImage: "1.square.fill") }
                         CommunityView()
                             .tabItem { Label("커뮤니티", systemImage: "2.square.fill") }
@@ -40,7 +40,7 @@ struct ContentView: View {
                 case .teumNote:
                     FireStoreTestView()
                 case .lookingForTeum:
-                    LookingForTeumView()
+                    MapView()
                 case .login:
                     LoginView(viewModel: loginViewModel)
                 case .TeumNoteWrite:

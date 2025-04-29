@@ -248,7 +248,7 @@ struct TeumNoteWriteView: View {
             content: contentText,
             imagePaths: [],  // TODO: 이미지 어떻게 저장할건지 논의 필요
             isPublic: isPublic,
-            createdAt: Date(),
+            createdAt: Date()
         )
 
         do {
