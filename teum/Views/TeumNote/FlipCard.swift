@@ -10,18 +10,22 @@ import SwiftUI
 struct FlipCard: View {
     
     @Binding var flipped: Bool
+    @Binding var front: String
+    @Binding var back: String
 
     var body: some View {
         ZStack {
             if flipped {
-                Text("Back")
+                Text(front)
+                    .foregroundStyle(Color.softLavender)
                     .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
             } else {
-                Text("Front")
+                Text(back)
+                    .foregroundStyle(Color.midnightBlue)
             }
         }
         .frame(width: 300, height: 400)
-        .background(flipped ? .blue : .red)
+        .background(flipped ? Color.midnightBlue : Color.softLavender)
         .cornerRadius(10)
         .onTapGesture {
             withAnimation {
@@ -31,8 +35,4 @@ struct FlipCard: View {
         .rotation3DEffect(.degrees(flipped ? 180 : 0), axis: (x: 0, y: -1, z: 0))
     }
     
-}
-
-#Preview {
-    FlipCard(flipped: .constant(false))
 }
