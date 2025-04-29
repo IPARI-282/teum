@@ -8,7 +8,8 @@
 import Foundation
 
 protocol ViewModelType: ObservableObject {
-    
-    
-    
+//    associatedtype Input
+//    associatedtype Output
+//
+//    func transform(input: Input) -> Output
 }
