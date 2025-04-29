@@ -35,7 +35,7 @@ extension Note {
                 content: "이것은 테스트용 노트입니다. 인덱스: \(index + 1)",
                 imagePaths: [],
                 isPublic: Bool.random(),
-                createdAt: Date(),
+                createdAt: Date()
             )
         }
     }

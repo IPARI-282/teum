@@ -9,6 +9,7 @@ import UIKit
 
 import FirebaseCore
 import GoogleSignIn
+import KakaoMapsSDK
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     
@@ -17,6 +18,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         print("✅ AppDelegate - didFinishLaunchingWithOptions")
         FirebaseApp.configure()
+        
+        
+        
+        print("0909")
+        SDKInitializer.InitSDK(appKey: APIKey.kakaoKey)
+        print("✅KakaoKey setting success")
+        
         return true
     }
     

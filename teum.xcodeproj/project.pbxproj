@@ -7,16 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8BCE5E872DBFAE5400F97412 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BCE5E862DBFAE5400F97412 /* GoogleService-Info.plist */; };
+		8BCE5E8C2DBFB00500F97412 /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 8BCE5E8B2DBFB00500F97412 /* KakaoMapsSDK-SPM */; };
 		BFB8F2D82DB77D4F00C5A7CB /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = BFB8F2D72DB77D4F00C5A7CB /* GoogleSignIn */; };
 		C4182EA22DA26B97006EF403 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4182EA12DA26B97006EF403 /* ContentView.swift */; };
 		C4182EA72DA26B9A006EF403 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4182EA62DA26B9A006EF403 /* Preview Assets.xcassets */; };
-		C425804B2DBE56C00002A225 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C425804A2DBE56C00002A225 /* GoogleService-Info.plist */; };
 		F138A1622DAF5FA2000A6DE9 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F138A1612DAF5FA2000A6DE9 /* FirebaseAuth */; };
 		F138A1642DAF5FA2000A6DE9 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = F138A1632DAF5FA2000A6DE9 /* FirebaseCrashlytics */; };
 		F138A1662DAF5FA2000A6DE9 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F138A1652DAF5FA2000A6DE9 /* FirebaseFirestore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8BCE5E862DBFAE5400F97412 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BFB8F2B62DB36B7500C5A7CB /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		BFB8F2B72DB36CAA00C5A7CB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BFB8F2E52DB8828A00C5A7CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -24,7 +26,6 @@
 		C4182E9C2DA26B97006EF403 /* teum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4182EA12DA26B97006EF403 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C4182EA62DA26B9A006EF403 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		C425804A2DBE56C00002A225 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -49,6 +50,7 @@
 			files = (
 				F138A1622DAF5FA2000A6DE9 /* FirebaseAuth in Frameworks */,
 				BFB8F2D82DB77D4F00C5A7CB /* GoogleSignIn in Frameworks */,
+				8BCE5E8C2DBFB00500F97412 /* KakaoMapsSDK-SPM in Frameworks */,
 				F138A1642DAF5FA2000A6DE9 /* FirebaseCrashlytics in Frameworks */,
 				F138A1662DAF5FA2000A6DE9 /* FirebaseFirestore in Frameworks */,
 			);
@@ -60,9 +62,9 @@
 		C4182E932DA26B97006EF403 = {
 			isa = PBXGroup;
 			children = (
+				BFB8F2B62DB36B7500C5A7CB /* .gitignore */,
 				C4182E9E2DA26B97006EF403 /* teum */,
 				C4182E9D2DA26B97006EF403 /* Products */,
-				BFB8F2B62DB36B7500C5A7CB /* .gitignore */,
 				BFB8F2B72DB36CAA00C5A7CB /* README.md */,
 			);
 			sourceTree = "<group>";
@@ -79,8 +81,8 @@
 			isa = PBXGroup;
 			children = (
 				BFB8F2EA2DB8C13400C5A7CB /* teum.entitlements */,
-				C425804A2DBE56C00002A225 /* GoogleService-Info.plist */,
 				BFB8F2E52DB8828A00C5A7CB /* Info.plist */,
+				8BCE5E862DBFAE5400F97412 /* GoogleService-Info.plist */,
 				F138A1272DAE4119000A6DE9 /* Security */,
 				F138A0D62DAE0FC6000A6DE9 /* Views */,
 				F138A0D32DAE0FA0000A6DE9 /* Utils */,
@@ -176,6 +178,7 @@
 			packageReferences = (
 				F138A1602DAF5FA2000A6DE9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				BFB8F2D62DB77D4F00C5A7CB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				8BCE5E8A2DBFB00500F97412 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */,
 			);
 			productRefGroup = C4182E9D2DA26B97006EF403 /* Products */;
 			projectDirPath = "";
@@ -192,7 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4182EA72DA26B9A006EF403 /* Preview Assets.xcassets in Resources */,
-				C425804B2DBE56C00002A225 /* GoogleService-Info.plist in Resources */,
+				8BCE5E872DBFAE5400F97412 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,6 +430,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		8BCE5E8A2DBFB00500F97412 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao-mapsSDK/KakaoMapsSDK-SPM";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.12.5;
+			};
+		};
 		BFB8F2D62DB77D4F00C5A7CB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS.git";
@@ -446,6 +457,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8BCE5E8B2DBFB00500F97412 /* KakaoMapsSDK-SPM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8BCE5E8A2DBFB00500F97412 /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */;
+			productName = "KakaoMapsSDK-SPM";
+		};
 		BFB8F2D72DB77D4F00C5A7CB /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BFB8F2D62DB77D4F00C5A7CB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
