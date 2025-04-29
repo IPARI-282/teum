@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BF6DE9712DC1161300E10EFC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF6DE9702DC1161300E10EFC /* GoogleService-Info.plist */; };
+		BF6DEA222DC1465500E10EFC /* AuthKey_SVM58475VA.p8 in Resources */ = {isa = PBXBuildFile; fileRef = BF6DEA212DC1465500E10EFC /* AuthKey_SVM58475VA.p8 */; };
 		BFB8F2D82DB77D4F00C5A7CB /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = BFB8F2D72DB77D4F00C5A7CB /* GoogleSignIn */; };
 		C4182EA22DA26B97006EF403 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4182EA12DA26B97006EF403 /* ContentView.swift */; };
 		C4182EA72DA26B9A006EF403 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4182EA62DA26B9A006EF403 /* Preview Assets.xcassets */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BF6DE9702DC1161300E10EFC /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		BF6DEA212DC1465500E10EFC /* AuthKey_SVM58475VA.p8 */ = {isa = PBXFileReference; lastKnownFileType = text; path = AuthKey_SVM58475VA.p8; sourceTree = "<group>"; };
 		BFB8F2B62DB36B7500C5A7CB /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		BFB8F2B72DB36CAA00C5A7CB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BFB8F2E52DB8828A00C5A7CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -25,10 +29,10 @@
 		C4182E9C2DA26B97006EF403 /* teum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4182EA12DA26B97006EF403 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C4182EA62DA26B9A006EF403 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		F1BB0F372DC11A0F0040F75B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		BF6DE9742DC1166900E10EFC /* Security */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Security; sourceTree = "<group>"; };
 		F138A0B52DAE0E73000A6DE9 /* Application */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Application; sourceTree = "<group>"; };
 		F138A0BC2DAE0E98000A6DE9 /* Assets */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Assets; sourceTree = "<group>"; };
 		F138A0BE2DAE0EB9000A6DE9 /* Colors */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Colors; sourceTree = "<group>"; };
@@ -40,7 +44,6 @@
 		F138A0D02DAE0F76000A6DE9 /* Protocol */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Protocol; sourceTree = "<group>"; };
 		F138A0D32DAE0FA0000A6DE9 /* Utils */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Utils; sourceTree = "<group>"; };
 		F138A0D62DAE0FC6000A6DE9 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
-		F138A1272DAE4119000A6DE9 /* Security */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Security; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,10 +83,10 @@
 		C4182E9E2DA26B97006EF403 /* teum */ = {
 			isa = PBXGroup;
 			children = (
+				BF6DE9742DC1166900E10EFC /* Security */,
 				BFB8F2EA2DB8C13400C5A7CB /* teum.entitlements */,
 				F1BB0F372DC11A0F0040F75B /* GoogleService-Info.plist */,
 				BFB8F2E52DB8828A00C5A7CB /* Info.plist */,
-				F138A1272DAE4119000A6DE9 /* Security */,
 				F138A0D62DAE0FC6000A6DE9 /* Views */,
 				F138A0D32DAE0FA0000A6DE9 /* Utils */,
 				F138A0D02DAE0F76000A6DE9 /* Protocol */,
@@ -133,6 +136,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				BF6DE9742DC1166900E10EFC /* Security */,
 				F138A0B52DAE0E73000A6DE9 /* Application */,
 				F138A0BC2DAE0E98000A6DE9 /* Assets */,
 				F138A0BE2DAE0EB9000A6DE9 /* Colors */,
@@ -144,7 +148,6 @@
 				F138A0D02DAE0F76000A6DE9 /* Protocol */,
 				F138A0D32DAE0FA0000A6DE9 /* Utils */,
 				F138A0D62DAE0FC6000A6DE9 /* Views */,
-				F138A1272DAE4119000A6DE9 /* Security */,
 			);
 			name = teum;
 			productName = teum;
@@ -341,7 +344,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"teum/Preview Content\"";
-				DEVELOPMENT_TEAM = Y2VDXSZQ3M;
+				DEVELOPMENT_TEAM = N727744RT8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = teum/Info.plist;
@@ -378,7 +381,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"teum/Preview Content\"";
-				DEVELOPMENT_TEAM = Y2VDXSZQ3M;
+				DEVELOPMENT_TEAM = N727744RT8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = teum/Info.plist;

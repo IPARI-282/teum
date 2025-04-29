@@ -77,19 +77,11 @@ struct MyPageView: View {
                                                 // 회원 탈퇴 처리
                                                 Task {
                                                     do {
-                                                        try? Auth.auth().signOut()
-                                                        
                                                         // 1. Firestore 데이터 삭제
                                                         try await FireStoreManager.shared.deleteAccount()
-                                                       
-                                                       // 2. Firebase Auth 계정 삭제
-                                                       try await user.delete()
-                                                       
-                                                       // 3. UserDefaults 데이터 삭제
-                                                       UserDefaultsManager.shared.clearUser()
-                                                        
+                                                        // 2. UserDefaults 데이터 삭제
+                                                        UserDefaultsManager.shared.clearUser()
                                                         loginViewModel.withDrow()
-                                                        
                                                         print("✅ 회원 탈퇴 및 데이터 삭제 완료")
                                                     } catch {
                                                         print("❌ 회원 탈퇴 실패: \(error.localizedDescription)")
@@ -149,7 +141,7 @@ struct MyPageView: View {
                         .fontWeight(.bold)
                         .foregroundStyle(Color.midnightBlue)//TODO: black
                     
-                    Text(user.email ?? "이메일")
+                    Text(user.email ?? "")
                         .font(.subheadline)
                         .foregroundStyle(Color.deepNavyBlue)
                 }

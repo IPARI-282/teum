@@ -148,8 +148,9 @@ final class FireStoreManager {
         guard let user = Auth.auth().currentUser else {
             throw AppError.authNotFound
         }
+        print("찐",user.uid)
         let uid = user.uid
-
+        print(user.uid)
         do {
             try await deleteUserDocument(uid: uid)
             try await deleteAllNotes(for: uid)
