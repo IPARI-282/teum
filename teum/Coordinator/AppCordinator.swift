@@ -67,5 +67,6 @@ enum Destination: Hashable {
     case lookingForTeum
     case community
     case teumNote
+    case TeumNoteWrite
     case myPage
 }

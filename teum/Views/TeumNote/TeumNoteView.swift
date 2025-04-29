@@ -9,28 +9,24 @@ import SwiftUI
 
 struct TeumNoteView: View {
     
+    @EnvironmentObject var coordinator: AppCoordinator<Destination>
     @State private var myNotes: [Note] = []
-    @State private var navigateToWriteView = false  // TODO: 네비게이션 관리 필요
     
     var body: some View {
-        NavigationStack {
             ZStack(alignment: .bottomTrailing) {
                 titleView()
                 myNoteList()
                 floatingButton()
             }
-            .navigationDestination(isPresented: $navigateToWriteView) {
-                TeumNoteWriteView()
-            }
             .task {
                 do {
                     let data = try await FireStoreManager.shared.fetchPublicNotes()
                     myNotes = data
+                    
                 } catch {
                     pprint("Error fetching notes: \(error.localizedDescription)")
                 }
             }
-        }
     }
     
     private func titleView() -> some View {
@@ -64,7 +60,7 @@ struct TeumNoteView: View {
     
     private func floatingButton() -> some View {
         Button {
-            navigateToWriteView = true
+            self.coordinator.push(.TeumNoteWrite)
         } label: {
             Image(systemName: "square.and.pencil")
                 .font(.system(size: 20))

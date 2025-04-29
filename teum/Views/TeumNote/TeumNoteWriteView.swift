@@ -11,6 +11,7 @@ import FirebaseFirestore
 
 struct TeumNoteWriteView: View {
     
+    @EnvironmentObject var coorinator: AppCoordinator<Destination>
     @State private var titleText = ""
     @State private var selectedDate = Date()
     @State private var selectedDistrict: SeoulDistrict = .gangnam
@@ -85,38 +86,46 @@ struct TeumNoteWriteView: View {
     var body: some View {
         VStack {
             Form {
-                Section(header: Text("오늘의 혼놀 기록")) {
-                    TextField("제목", text: $titleText)
-                    DatePicker("날짜", selection: $selectedDate, displayedComponents: .date)
-                    districtPickerView()
-                    Toggle("공개", isOn: $isPublic)
-                }
-                Section {
-                    contentFieldView()
-                }
-                Section(header: Text("오늘의 소셜 배터리 점수는?")) {
-                    Slider(value: $socialBattery, in: 0...100, step: 1) {
-                        Text("소셜 배터리")
-                    }
-                    Text("\(Int(socialBattery))%")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                }
-            }
-            .alert("알림", isPresented: $showAlert) {
-                Button("확인", role: .cancel) { }
-            } message: {
-                Text(alertMessage)
-            }
-            HStack {
-                Spacer()
-                photoPickerView()
-            }
-            .padding(.trailing)
-            selectedPhotoPreviewView()
-            saveButton()
-        }
-        .background(Color(UIColor.systemGroupedBackground))
+                   Section(header: Text("오늘의 혼놀 기록")) {
+                       TextField("제목", text: $titleText)
+                       DatePicker("날짜", selection: $selectedDate, displayedComponents: .date)
+                       districtPickerView()
+                       Toggle("공개", isOn: $isPublic)
+                   }
+
+                   Section {
+                       contentFieldView()
+                   }
+
+                   Section(header: Text("오늘의 소셜 배터리 점수는?")) {
+                       Slider(value: $socialBattery, in: 0...100, step: 1)
+                       Text("\(Int(socialBattery))%")
+                           .font(.caption)
+                           .foregroundColor(.gray)
+                   }
+
+                   Section(header: Text("사진 추가하기")) {
+                       VStack(alignment: .leading, spacing: 8) {
+                           HStack {
+                               Spacer()
+                               photoPickerView()
+                               Spacer()
+                           }
+                           selectedPhotoPreviewView()
+                       }
+                   }
+
+                   Section {
+                       saveButton()
+                   }
+               }
+               .alert("알림", isPresented: $showAlert) {
+                   Button("확인", role: .cancel) { }
+               } message: {
+                   Text(alertMessage)
+               }
+               .background(Color(UIColor.systemGroupedBackground))
+           }
     }
     
     
