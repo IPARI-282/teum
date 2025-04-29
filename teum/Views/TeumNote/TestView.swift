@@ -37,10 +37,10 @@ struct FireStoreTestView: View {
 
                 Section(header: Text("장소")) {
                     TextField("장소 이름", text: $placeName)
-                    TextField("위도", text: $latitude)
-                        .keyboardType(.decimalPad)
-                    TextField("경도", text: $longitude)
-                        .keyboardType(.decimalPad)
+                    // TextField("위도", text: $latitude)
+                    //     .keyboardType(.decimalPad)
+                    // TextField("경도", text: $longitude)
+                    //     .keyboardType(.decimalPad)
                 }
 
                 Section(header: Text("소셜 배터리")) {
@@ -85,8 +85,8 @@ struct FireStoreTestView: View {
             date: selectedDate,
             socialBattery: 50,
             district: "",
-            latitude: 0,
-            longitude: 0,
+            // latitude: 0,
+            // longitude: 0,
             content: contentText,
             imagePaths: [],
             isPublic: true,

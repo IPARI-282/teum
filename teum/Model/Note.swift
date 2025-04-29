@@ -14,7 +14,7 @@ struct Note: Identifiable, Codable {
     var userId: String                          // 작성한 사용자 UID (Auth 기반)
     var title: String                           // 노트 제목
     var date: Date                              // 노트를 작성한 날짜 (사용자 선택)
-    var socialBattery: Int                      // 소셜 배터리, 현재는 Int 지만 기획에 따라 Double로 변경 가능
+    var socialBattery: Double                      // 소셜 배터리, 현재는 Int 지만 기획에 따라 Double로 변경 가능
     var district: String                        // 지역 이름 (예: "강남구", "중구")
     var latitude: Double?                       // 장소의 위도
     var longitude: Double?                      // 장소의 경도
