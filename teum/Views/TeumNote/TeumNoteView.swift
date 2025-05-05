@@ -23,7 +23,7 @@ struct TeumNoteView: View {
         }
         .task {
             do {
-                let data = try await FireStoreManager.shared.fetchPublicNotes()
+                let data = try await FireStoreManager.shared.fetchMyNotes()
                 myNotes = data
                 flippedStates = Dictionary(uniqueKeysWithValues: data.compactMap {
                     guard let id = $0.id else { return nil }
