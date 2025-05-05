@@ -38,9 +38,8 @@ extension CommunityView {
         ) {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
-                    ForEach(trendingList.indices, id: \.self) { index in
-                        let note = trendingList[index]
-                        RecentTeumNotes(rank: index + 1, imageName: "article\(index + 1)", title: note.title, subtitle: note.district)
+                    ForEach(Array(trendingList.enumerated()), id: \.element.id) { index, note in
+                        RecentTeumNotes(rank: index + 1, note: note)
                     }
                 }
                 .padding(.horizontal)
@@ -64,53 +63,66 @@ extension CommunityView {
     
     func teumNoteCardView(teumNote: Note) -> some View {
         VStack(alignment: .leading, spacing: 12) {
+    
             HStack(spacing: 8) {
-                if let firstImagePath = teumNote.imagePaths?.first,
-                   let url = URL(string: firstImagePath) {
-                    AsyncImage(url: url) { image in
-                        image
-                            .resizable()
-                            .clipShape(Circle())
-                    } placeholder: {
-                        Circle()
-                            .fill(Color.gray.opacity(0.3))
-                    }
-                    .frame(width: 36, height: 36)
-                } else {
-                    Image("ProfileImage")
-                        .resizable()
-                        .clipShape(Circle())
-                        .frame(width: 36, height: 36)
-                }
-                
+                Image("AppIconPreview")
+                    .resizable()
+                    .frame(width: 28, height: 28)
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
+
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(teumNote.title)
-                        .font(.headline)
-                    Text("\(teumNote.socialBattery.formatted())%")
+                    Text(viewModel.nicknameRandom())
+                        .font(.subheadline)
+                        .bold()
+                    Text(teumNote.district)
                         .font(.caption)
                         .foregroundColor(.gray)
                 }
-                .padding(.leading, 8)
-                
+
                 Spacer()
+            }
+
+            Text(teumNote.title)
+                .font(.headline)
+                .bold()
+
+            // 최대 50글자 + "..." 처리
+            Text(teumNote.content.prefix(50) + "...")
+                .font(.subheadline)
+                .foregroundColor(.gray)
+
+            if let imagePath = teumNote.imagePaths?.first,
+               let url = URL(string: imagePath) {
+                AsyncImage(url: url) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 300, height: 200)
+                        .background(Color.gray.opacity(0.2))
+                        .cornerRadius(12)
+                } placeholder: {
+                    Color.gray.opacity(0.2)
+                        .frame(width: 300, height: 200)
+                        .cornerRadius(12)
+                }
             }
         }
         .padding()
         .background(RoundedRectangle(cornerRadius: 16).fill(Color.white))
         .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
+        .padding(.horizontal)
     }
 }
 
 struct RecentTeumNotes: View {
     let rank: Int
-    let imageName: String
-    let title: String
-    let subtitle: String
+    let note: Note
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             ZStack(alignment: .topLeading) {
-                if let url = URL(string: imageName), imageName.starts(with: "http") {
+                if let imagePath = note.imagePaths?.first,
+                   let url = URL(string: imagePath) {
                     AsyncImage(url: url) { image in
                         image
                             .resizable()
@@ -139,20 +151,17 @@ struct RecentTeumNotes: View {
                     .padding(8)
             }
 
-            Text(title)
+            Text(note.title)
                 .font(.headline)
                 .lineLimit(1)
 
-            Text(subtitle)
+            Text(note.district)
                 .font(.caption)
                 .foregroundColor(.gray)
         }
         .frame(width: 160)
     }
-    
-   
-    }
-
+}
 
 struct CustomHeaderView: View {
     let title: String

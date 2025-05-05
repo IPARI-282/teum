@@ -129,19 +129,33 @@ final class FireStoreManager {
     }
 
     // MARK: - 노트 전체 삭제
-    private func deleteAllNotes(for uid: String) async throws {
-        let snapshot = try await db.collection("Notes")
-            .whereField("userId", isEqualTo: uid)
-            .getDocuments()
+    // MARK: - 노트 전체 삭제 (+ 이미지 삭제)
+        private func deleteAllNotes(for uid: String) async throws {
+            let snapshot = try await db.collection("Notes")
+                .whereField("userId", isEqualTo: uid)
+                .getDocuments()
 
-        for document in snapshot.documents {
-            do {
-                try await document.reference.delete()
-            } catch {
-                throw AppError.firestoreNoteDeleteFailed
+            for document in snapshot.documents {
+                let note = try document.data(as: Note.self)
+
+                if let imagePaths = note.imagePaths {
+                    for imagePath in imagePaths {
+                        do {
+                            try await StorageManager.shared.deleteImage(at: imagePath)
+                        } catch {
+                            print("⚠️ 이미지 삭제 실패: \(imagePath), error: \(error)")
+                        }
+                    }
+                }
+
+                do {
+                    try await document.reference.delete()
+                } catch {
+                    throw AppError.firestoreNoteDeleteFailed
+                }
             }
         }
-    }
+
 
     // MARK: - 회원 탈퇴
     func deleteAccount() async throws {
