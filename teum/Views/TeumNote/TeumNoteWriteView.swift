@@ -120,7 +120,9 @@ struct TeumNoteWriteView: View {
                    }
                }
                .alert("알림", isPresented: $showAlert) {
-                   Button("확인", role: .cancel) { }
+                   Button("확인", role: .cancel) {
+                       coorinator.pop()
+                   }
                } message: {
                    Text(alertMessage)
                }
@@ -276,9 +278,11 @@ struct TeumNoteWriteView: View {
 
         do {
             try await FireStoreManager.shared.addNote(note)
-            alertMessage = "노트 저장 성공! (userId: \(uid))"
+            alertMessage = "노트 저장 성공!"
+            pprint("노트 저장 성공 userId: \(uid)")
         } catch {
-            alertMessage = "노트 저장 실패: \(error.localizedDescription)"
+            alertMessage = "노트 저장 실패"
+            pprint("\(error.localizedDescription)")
         }
 
         showAlert = true
