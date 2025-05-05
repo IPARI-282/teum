@@ -15,13 +15,13 @@ struct FlipCard: View {
 
     var body: some View {
         ZStack {
-            if flipped {
+            if !flipped {
                 Text(front)
-                    .foregroundStyle(Color.softLavender)
-                    .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
+                    .foregroundStyle(Color.midnightBlue)
             } else {
                 Text(back)
-                    .foregroundStyle(Color.midnightBlue)
+                    .foregroundStyle(Color.softLavender)
+                    .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
             }
         }
         .frame(width: 300, height: 400)
