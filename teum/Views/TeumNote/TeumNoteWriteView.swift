@@ -230,6 +230,8 @@ struct TeumNoteWriteView: View {
     
     private func saveNoteToFirestore() async {
         let uid = UserDefaultsManager.shared.userId
+        let noteId = UUID().uuidString  
+        var imageURLs: [String] = []
 
         do {
             try await FireStoreManager.shared.saveTestUser()
@@ -239,14 +241,35 @@ struct TeumNoteWriteView: View {
             return
         }
 
+        // ✅ 이미지 업로드
+        for (index, image) in selectedUIImages.enumerated() {
+            if let data = image.jpegData(compressionQuality: 0.8) {
+                do {
+                    let url = try await StorageManager.shared.uploadNoteImage(
+                        data,
+                        userId: uid,
+                        noteId: noteId,
+                        index: index
+                    )
+                    imageURLs.append(url)
+                } catch {
+                    alertMessage = "이미지 업로드 실패: \(error.localizedDescription)"
+                    showAlert = true
+                    return
+                }
+            }
+        }
+
+        // ✅ 노트 모델 생성
         let note = Note(
+            id: noteId,
             userId: uid,
             title: titleText,
             date: selectedDate,
             socialBattery: socialBattery,
             district: selectedDistrict.rawValue,
             content: contentText,
-            imagePaths: [],  // TODO: 이미지 어떻게 저장할건지 논의 필요
+            imagePaths: imageURLs,
             isPublic: isPublic,
             createdAt: Date()
         )
@@ -257,7 +280,7 @@ struct TeumNoteWriteView: View {
         } catch {
             alertMessage = "노트 저장 실패: \(error.localizedDescription)"
         }
-        
+
         showAlert = true
     }
 

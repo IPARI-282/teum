@@ -14,6 +14,7 @@
 		F138A1642DAF5FA2000A6DE9 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = F138A1632DAF5FA2000A6DE9 /* FirebaseCrashlytics */; };
 		F138A1662DAF5FA2000A6DE9 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F138A1652DAF5FA2000A6DE9 /* FirebaseFirestore */; };
 		F1641E452DC13117009E99DB /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = F1641E442DC13117009E99DB /* KakaoMapsSDK-SPM */; };
+		F1642F3D2DC84D70009E99DB /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F1642F3C2DC84D70009E99DB /* FirebaseStorage */; };
 		F1BB0F382DC11A0F0040F75B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F1BB0F372DC11A0F0040F75B /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +54,7 @@
 				F1641E452DC13117009E99DB /* KakaoMapsSDK-SPM in Frameworks */,
 				F138A1642DAF5FA2000A6DE9 /* FirebaseCrashlytics in Frameworks */,
 				F138A1662DAF5FA2000A6DE9 /* FirebaseFirestore in Frameworks */,
+				F1642F3D2DC84D70009E99DB /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,6 +483,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F1641E432DC13117009E99DB /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */;
 			productName = "KakaoMapsSDK-SPM";
+		};
+		F1642F3C2DC84D70009E99DB /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F138A1602DAF5FA2000A6DE9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
