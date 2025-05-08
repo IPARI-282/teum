@@ -19,13 +19,13 @@ struct ContentView: View {
                 } else if loginViewModel.isAuthenticated {
                     TabView { // TabView는 NavigationStack 내부
                         MapView()
-                            .tabItem { Label("틈찾기", systemImage: "1.square.fill") }
+                            .tabItem { Label("틈찾기", systemImage: "map") }
                         CommunityView()
-                            .tabItem { Label("커뮤니티", systemImage: "2.square.fill") }
+                            .tabItem { Label("커뮤니티", systemImage: "bubble.left.and.bubble.right.fill") }
                         TeumNoteView()
-                            .tabItem { Label("틈노트", systemImage: "3.square.fill") }
+                            .tabItem { Label("틈노트", systemImage: "square.and.pencil") }
                         MyPageView()
-                            .tabItem { Label("마이페이지", systemImage: "4.square.fill") }
+                            .tabItem { Label("마이페이지", systemImage: "person.crop.circle") }
                     }
                 } else {
                     LoginView(viewModel: loginViewModel)

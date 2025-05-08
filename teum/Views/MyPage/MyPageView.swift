@@ -16,7 +16,8 @@ struct MyPageView: View {
     @State private var isShowingPrivacyPolicy = false
     @State private var isShowingMailAlert = false
     @State private var isShowingWithdrawAlert = false
-    
+    @State private var showingReauthAlert = false
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -83,13 +84,32 @@ struct MyPageView: View {
                                                         UserDefaultsManager.shared.clearUser()
                                                         loginViewModel.withDrow()
                                                         print("✅ 회원 탈퇴 및 데이터 삭제 완료")
-                                                    } catch {
-                                                        print("❌ 회원 탈퇴 실패: \(error.localizedDescription)")
+                                                    } catch let error {
+                                                        print("❌ 회원 탈퇴 실패: \(error)")
+                                                        
+                                                        // 에러 타입 확인
+                                                        if let appError = error as? AppError,
+                                                           appError == .requiresRecentLogin {
+                                                            print("재인증 필요 에러 감지!")
+                                                            showingReauthAlert = true
+                                                        } else {
+                                                            print("다른 에러 발생")
+                                                        }
                                                     }
                                                 }
                                             },
                                             secondaryButton: .cancel(Text("취소"))
                                         )
+                                }
+                                .alert("재인증 필요", isPresented: $showingReauthAlert) {
+                                    Button("확인") {
+                                        // 로그아웃 처리
+                                        try? Auth.auth().signOut()
+                                        // 애플 리프레시 토큰 제거
+                                        UserDefaults.standard.removeObject(forKey: "appleRefreshToken")
+                                    }
+                                } message: {
+                                    Text("로그아웃후 다시 로그인 하여 다시 시도해주세요")
                                 }
                             }
                         }

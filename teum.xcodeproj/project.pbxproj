@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BF6DE9712DC1161300E10EFC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF6DE9702DC1161300E10EFC /* GoogleService-Info.plist */; };
-		BF6DEA222DC1465500E10EFC /* AuthKey_SVM58475VA.p8 in Resources */ = {isa = PBXBuildFile; fileRef = BF6DEA212DC1465500E10EFC /* AuthKey_SVM58475VA.p8 */; };
+		BF6DEB2E2DC8F04100E10EFC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = BF6DEB2D2DC8F04100E10EFC /* FirebaseStorage */; };
 		BFB8F2D82DB77D4F00C5A7CB /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = BFB8F2D72DB77D4F00C5A7CB /* GoogleSignIn */; };
 		C4182EA22DA26B97006EF403 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4182EA12DA26B97006EF403 /* ContentView.swift */; };
 		C4182EA72DA26B9A006EF403 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4182EA62DA26B9A006EF403 /* Preview Assets.xcassets */; };
@@ -16,13 +15,10 @@
 		F138A1642DAF5FA2000A6DE9 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = F138A1632DAF5FA2000A6DE9 /* FirebaseCrashlytics */; };
 		F138A1662DAF5FA2000A6DE9 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F138A1652DAF5FA2000A6DE9 /* FirebaseFirestore */; };
 		F1641E452DC13117009E99DB /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = F1641E442DC13117009E99DB /* KakaoMapsSDK-SPM */; };
-		F1642F3D2DC84D70009E99DB /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F1642F3C2DC84D70009E99DB /* FirebaseStorage */; };
-		F1BB0F382DC11A0F0040F75B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F1BB0F372DC11A0F0040F75B /* GoogleService-Info.plist */; };
+		F1BB0F382DC11A0F0040F75B /* (null) in Resources */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BF6DE9702DC1161300E10EFC /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		BF6DEA212DC1465500E10EFC /* AuthKey_SVM58475VA.p8 */ = {isa = PBXFileReference; lastKnownFileType = text; path = AuthKey_SVM58475VA.p8; sourceTree = "<group>"; };
 		BFB8F2B62DB36B7500C5A7CB /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		BFB8F2B72DB36CAA00C5A7CB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BFB8F2E52DB8828A00C5A7CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -57,13 +53,20 @@
 				F1641E452DC13117009E99DB /* KakaoMapsSDK-SPM in Frameworks */,
 				F138A1642DAF5FA2000A6DE9 /* FirebaseCrashlytics in Frameworks */,
 				F138A1662DAF5FA2000A6DE9 /* FirebaseFirestore in Frameworks */,
-				F1642F3D2DC84D70009E99DB /* FirebaseStorage in Frameworks */,
+				BF6DEB2E2DC8F04100E10EFC /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF6DEB2C2DC8F04000E10EFC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C4182E932DA26B97006EF403 = {
 			isa = PBXGroup;
 			children = (
@@ -71,6 +74,7 @@
 				C4182E9D2DA26B97006EF403 /* Products */,
 				BFB8F2B62DB36B7500C5A7CB /* .gitignore */,
 				BFB8F2B72DB36CAA00C5A7CB /* README.md */,
+				BF6DEB2C2DC8F04000E10EFC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -87,7 +91,6 @@
 			children = (
 				BF6DE9742DC1166900E10EFC /* Security */,
 				BFB8F2EA2DB8C13400C5A7CB /* teum.entitlements */,
-				F1BB0F372DC11A0F0040F75B /* GoogleService-Info.plist */,
 				BFB8F2E52DB8828A00C5A7CB /* Info.plist */,
 				F138A0D62DAE0FC6000A6DE9 /* Views */,
 				F138A0D32DAE0FA0000A6DE9 /* Utils */,
@@ -200,7 +203,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4182EA72DA26B9A006EF403 /* Preview Assets.xcassets in Resources */,
-				F1BB0F382DC11A0F0040F75B /* GoogleService-Info.plist in Resources */,
+				F1BB0F382DC11A0F0040F75B /* (null) in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +351,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"teum/Preview Content\"";
 				DEVELOPMENT_TEAM = N727744RT8;
 				ENABLE_PREVIEWS = YES;
+				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = teum/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "틈";
@@ -356,6 +360,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -385,6 +390,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"teum/Preview Content\"";
 				DEVELOPMENT_TEAM = N727744RT8;
 				ENABLE_PREVIEWS = YES;
+				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = teum/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "틈";
@@ -393,6 +399,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -462,6 +469,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		BF6DEB2D2DC8F04100E10EFC /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F138A1602DAF5FA2000A6DE9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		BFB8F2D72DB77D4F00C5A7CB /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BFB8F2D62DB77D4F00C5A7CB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
@@ -486,11 +498,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F1641E432DC13117009E99DB /* XCRemoteSwiftPackageReference "KakaoMapsSDK-SPM" */;
 			productName = "KakaoMapsSDK-SPM";
-		};
-		F1642F3C2DC84D70009E99DB /* FirebaseStorage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F138A1602DAF5FA2000A6DE9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
