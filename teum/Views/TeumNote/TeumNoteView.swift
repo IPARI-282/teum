@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct TeumNoteView: View {
-    
     @EnvironmentObject var coordinator: AppCoordinator<Destination>
     @State private var myNotes: [Note] = []
     @State private var flippedStates: [String: Bool] = [:]
-    
+
     var body: some View {
         VStack {
             CustomHeaderView(title: "틈 노트")
@@ -34,29 +33,30 @@ struct TeumNoteView: View {
             }
         }
     }
-    
+
     private func bindingForNoteFlip(id: String) -> Binding<Bool> {
         return Binding(
             get: { flippedStates[id] ?? false },
             set: { flippedStates[id] = $0 }
         )
     }
-    
+
     private func myNoteList() -> some View {
         ScrollView {
             LazyVStack(spacing: 16) {
-                ForEach($myNotes, id: \.id) { note in
-                    FlipCard(
-                        flipped: bindingForNoteFlip(id: note.id ?? ""),
-                        front: note.title,
-                        back: note.content
-                    )
+                ForEach(myNotes, id: \ .id) { note in
+                    if let id = note.id {
+                        FlipCard(
+                            flipped: bindingForNoteFlip(id: id),
+                            note: note
+                        )
+                    }
                 }
             }
         }
         .padding(.horizontal)
     }
-    
+
     private func floatingButton() -> some View {
         Button {
             self.coordinator.push(.TeumNoteWrite)
@@ -71,7 +71,6 @@ struct TeumNoteView: View {
         }
         .padding(.bottom)
     }
-    
 }
 
 #Preview {

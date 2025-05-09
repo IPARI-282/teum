@@ -86,7 +86,6 @@ extension CommunityView {
                 .font(.headline)
                 .bold()
 
-            // 최대 50글자 + "..." 처리
             Text(teumNote.content.prefix(50) + "...")
                 .font(.subheadline)
                 .foregroundColor(.gray)
