@@ -26,7 +26,9 @@ enum AppError: LocalizedError {
     case accountDeletionFailed
     case invalidNoteData
     case unknown
-
+    case reauthenticationFailed
+    case requiresRecentLogin
+    
     var errorDescription: String? {
         switch self {
         case .authNotFound:
@@ -51,7 +53,11 @@ enum AppError: LocalizedError {
 
         case .accountDeletionFailed:
             return "회원 탈퇴 중 오류가 발생했습니다."
-
+        case .reauthenticationFailed:
+            return "재인증하는 데 실패했습니다."
+        case .requiresRecentLogin:
+            return "재인증이 필요합니다."
+            
         case .invalidNoteData:
             return "노트 정보가 올바르지 않습니다."
 

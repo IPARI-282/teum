@@ -14,18 +14,23 @@ struct LoginView: View {
 
     var body: some View {
         ZStack {
-            Color.mainColor
+            Image("teumBackground2")
+                .resizable()
                 .ignoresSafeArea()
             
-            VStack {
+            VStack() {
+                Spacer(minLength: 60)
+                
                 Text("틈")
                     .font(.largeTitle.bold())
                     .padding(.bottom, 8)
 
-                Text("내게 맞는 조용한 공간을 찾아드릴게요")
+                Text("혼자 놀기 좋은 공간을 찾아드릴게요")
                     .font(.subheadline)
-                    .foregroundColor(.gray)
-                    .padding(.bottom, 40)
+                    .foregroundColor(.white)
+                    //.padding(40)
+                
+                Spacer()
                 
                 //애플 로그인 버튼
                 SignInWithAppleButton(.continue, onRequest: { request in

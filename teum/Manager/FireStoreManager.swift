@@ -163,14 +163,29 @@ final class FireStoreManager {
             throw AppError.authNotFound
         }
         let uid = user.uid
-
+        print(user.uid)
+        
         do {
             try await deleteUserDocument(uid: uid)
+            pprint("✅ 유저 문서 삭제 완료")
+            
             try await deleteAllNotes(for: uid)
+            pprint("✅ 노트 삭제 완료")
+            
             try await user.delete()
             pprint("✅ 회원 탈퇴 완료")
-        } catch {
-            throw AppError.accountDeletionFailed
+        } catch let error as NSError {
+            print("❌ 탈퇴 실패 상세 에러:", error.localizedDescription)
+            print("❌ 에러 타입:", type(of: error))
+            print("❌ Auth 에러 코드:", error.code)
+            
+            // 17014는 AuthErrorCode.requiresRecentLogin의 rawValue입니다
+            if error.code == 17014 {
+                pprint("✅ 재인증 필요 감지")
+                throw AppError.requiresRecentLogin // 앱 에러 타입으로 변환
+            } else {
+                throw AppError.accountDeletionFailed
+            }
         }
     }
 }
