@@ -15,7 +15,6 @@
 		F138A1642DAF5FA2000A6DE9 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = F138A1632DAF5FA2000A6DE9 /* FirebaseCrashlytics */; };
 		F138A1662DAF5FA2000A6DE9 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F138A1652DAF5FA2000A6DE9 /* FirebaseFirestore */; };
 		F1641E452DC13117009E99DB /* KakaoMapsSDK-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = F1641E442DC13117009E99DB /* KakaoMapsSDK-SPM */; };
-		F1A502B72DCE2B050020F7CB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F1A502B62DCE2B050020F7CB /* GoogleService-Info.plist */; };
 		F1BB0F382DC11A0F0040F75B /* (null) in Resources */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
@@ -27,7 +26,6 @@
 		C4182E9C2DA26B97006EF403 /* teum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4182EA12DA26B97006EF403 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C4182EA62DA26B9A006EF403 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		F1A502B62DCE2B050020F7CB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -105,7 +103,6 @@
 				F138A0B52DAE0E73000A6DE9 /* Application */,
 				C4182EA12DA26B97006EF403 /* ContentView.swift */,
 				C4182EA52DA26B9A006EF403 /* Preview Content */,
-				F1A502B62DCE2B050020F7CB /* GoogleService-Info.plist */,
 			);
 			path = teum;
 			sourceTree = "<group>";
@@ -206,7 +203,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4182EA72DA26B9A006EF403 /* Preview Assets.xcassets in Resources */,
-				F1A502B72DCE2B050020F7CB /* GoogleService-Info.plist in Resources */,
 				F1BB0F382DC11A0F0040F75B /* (null) in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
